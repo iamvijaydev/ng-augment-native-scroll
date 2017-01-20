@@ -1,0 +1,19 @@
+{
+  "name": "ng-augment-scroll",
+  "version": "0.1.0",
+  "description": "Augmenting native scroll for higher functionality",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "author": "“Vijay <“vijaydev.in@gmail.com”> (“http://vijaydev.com/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamvijaydev/ng-augment-scroll"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  }
+}
