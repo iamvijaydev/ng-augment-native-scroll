@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ngNativeScroll')
+angular.module('ngAugmentNativeScroll')
     .directive('connectScrolls', function () {
         return {
             restrict: 'E',
