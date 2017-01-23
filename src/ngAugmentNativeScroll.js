@@ -1,52 +1,55 @@
 'use strict';
 
 angular.module('ngAugmentNativeScroll', [])
-    .directive('connectScrolls', function () {
+    .factory('utils', function () {
+        return {
+            findMatchingTarget: function (target, nodes) {
+                var found;
+
+                if ( ! nodes.length || target.tagName === 'BODY' ) {
+                    return 'BODY';
+                }
+
+                found = nodes.find(function (node) {
+                    return node.id === target.id
+                });
+
+                if ( found ) {
+                    return target.id;
+                } else {
+                    return this.findMatchingTarget(target.parentElement, nodes);
+                }
+            },
+            getPoint: function (e, hasTouch) {
+                var point;
+
+                if( hasTouch && event.touches.length ) {
+                    point = {
+                        'x' : event.touches[0].clientX,
+                        'y' : event.touches[0].clientY
+                    }
+                } else {
+                    point = {
+                        'x' : event.clientX,
+                        'y' : event.clientY
+                    }
+                }
+
+                return point;
+            },
+            getTime: Date.now || function getTime () { return new Date().utils.getTime(); }
+        }
+    })
+    .directive('connectScrolls', function (utils) {
         return {
             restrict: 'E',
-            scope: {},
+            scope: {
+                options: '='
+            },
             transclude: true,
             replace: true,
-            template: '<span ng-transclude></span>',
+            template: '<span data-name="conntect-scrolls" ng-transclude></span>',
             link: function (scope, element) {
-                var findMatchingTarget = function (target, nodes) {
-                    var found;
-
-                    if ( ! nodes.length || target.tagName === 'BODY' ) {
-                        return 'BODY';
-                    }
-
-                    found = nodes.find(function (node) {
-                        return node.id === target.id
-                    });
-
-                    if ( found ) {
-                        return target.id;
-                    } else {
-                        return findMatchingTarget(target.parentElement, nodes);
-                    }
-                }
-
-                var getPoint = function (e, hasTouch) {
-                    var point;
-
-                    if( hasTouch && event.touches.length ) {
-                        point = {
-                            'x' : event.touches[0].clientX,
-                            'y' : event.touches[0].clientY
-                        }
-                    } else {
-                        point = {
-                            'x' : event.clientX,
-                            'y' : event.clientY
-                        }
-                    }
-
-                    return point;
-                }
-
-                var getTime = Date.now || function getTime () { return new Date().getTime(); }
-
                 var hasTouch = 'ontouchstart' in window;
                 var DETECT_EVT = hasTouch ? 'touchstart' : 'mouseover';
                 var activeId = undefined;
@@ -72,13 +75,13 @@ angular.module('ngAugmentNativeScroll', [])
                 var isAutoScrolling = false;
 
                 var setActiveNode = function (e) {
-                    activeId = findMatchingTarget(e.target, scope.childNodes);
+                    activeId = utils.findMatchingTarget(e.target, scope.childNodes);
                 }
 
                 var leftTracker = function () {
                     var now, elapsed, delta;
 
-                    now = getTime();
+                    now = utils.getTime();
                     elapsed = now - timeStamp;
                     timeStamp = now;
                     delta = scrollLeft - lastScrollLeft;
@@ -94,7 +97,7 @@ angular.module('ngAugmentNativeScroll', [])
                 var topTracker = function () {
                     var now, elapsed, delta;
 
-                    now = getTime();
+                    now = utils.getTime();
                     elapsed = now - timeStamp;
                     timeStamp = now;
                     delta = scrollTop - lastScrollTop;
@@ -116,7 +119,7 @@ angular.module('ngAugmentNativeScroll', [])
                             $el.scrollLeft = correctedLeft;
                             scrollLeft = correctedLeft;
                         }
-                        if ( maxScrollY > 0 && correctedTop > 0 && correctedTop <= maxScrollY ) {
+                        if ( maxScrollY > 0 && correctedTop >= 0 && correctedTop <= maxScrollY ) {
                             $el.scrollTop = correctedTop;
                             scrollTop = correctedTop;
                         }
@@ -162,7 +165,7 @@ angular.module('ngAugmentNativeScroll', [])
                     var deltaY = 0, deltaX = 0, scrollX = 0, scrollY = 0;
                     var timeConstant = 325;
 
-                    elapsed = getTime() - timeStamp;
+                    elapsed = utils.getTime() - timeStamp;
 
                     if ( amplitudeTop ) {
                         deltaY = -amplitudeTop * Math.exp(-elapsed / timeConstant);
@@ -185,7 +188,7 @@ angular.module('ngAugmentNativeScroll', [])
 
                     scrollTo(targetLeft + scrollX, targetTop + scrollY);
 
-                    if ( (deltaX > 0.5 || deltaX < -0.5) || (deltaY > 0.5 || deltaY < -0.5) ) {
+                    if ( scrollX !== 0 || scrollY !== 0 ) {
                         autoScrollTracker = requestAnimationFrame(autoScroll);
                     } else {
                         isAutoScrolling = false;
@@ -193,10 +196,18 @@ angular.module('ngAugmentNativeScroll', [])
                     }
                 }
 
+                var cancelAutoScroll = function () {
+                    if ( isAutoScrolling ) {
+                        cancelAnimationFrame(autoScrollTracker);
+                        isAutoScrolling = false;
+                        autoScrollTracker = null;
+                    }
+                }
+
                 var tap = function (e) {
                     pressed = true;
-                    referenceX = getPoint(e, hasTouch).x;
-                    referenceY = getPoint(e, hasTouch).y;
+                    referenceX = utils.getPoint(e, hasTouch).x;
+                    referenceY = utils.getPoint(e, hasTouch).y;
 
                     velocityTop = amplitudeTop = 0;
                     velocityLeft = amplitudeLeft = 0;
@@ -204,13 +215,9 @@ angular.module('ngAugmentNativeScroll', [])
                     lastScrollTop = scrollTop;
                     lastScrollLeft = scrollLeft;
 
-                    timeStamp = getTime();
+                    timeStamp = utils.getTime();
 
-                    if ( isAutoScrolling ) {
-                        cancelAnimationFrame(autoScrollTracker);
-                        isAutoScrolling = false;
-                        autoScrollTracker = null;
-                    }
+                    cancelAutoScroll();
 
                     $listener.addEventListener( 'mousemove', swipe, true );
                     $listener.addEventListener( 'mouseup', end, true );
@@ -224,8 +231,8 @@ angular.module('ngAugmentNativeScroll', [])
                     var x, y, deltaX, deltaY;
 
                     if (pressed) {
-                        x = getPoint(e, hasTouch).x;
-                        y = getPoint(e, hasTouch).y;
+                        x = utils.getPoint(e, hasTouch).x;
+                        y = utils.getPoint(e, hasTouch).y;
 
                         deltaX = referenceX - x;
                         deltaY = referenceY - y;
@@ -255,7 +262,7 @@ angular.module('ngAugmentNativeScroll', [])
                 var end = function(e) {
                     pressed = false;
 
-                    timeStamp = getTime();
+                    timeStamp = utils.getTime();
                     topTracker();
                     leftTracker();
 
@@ -283,21 +290,106 @@ angular.module('ngAugmentNativeScroll', [])
                     return false;
                 }
 
+
+                var bindKinetic = function () {
+                    $listener.addEventListener( 'mousedown', tap, true );
+                }
+
+                var unbindKinetic = function () {
+                    $listener.removeEventListener( 'mousedown', tap );
+                }
+
+                var defaultOptions = {
+                    enableKinetics: false
+                };
+                var userOptions = angular.extend({}, defaultOptions, scope.options);
+
                 $listener.addEventListener( DETECT_EVT, setActiveNode, true );
                 $listener.addEventListener( 'scroll', onScrollHandler, true );
-                if ( ! hasTouch ) {
-                    $listener.addEventListener( 'mousedown', tap, true );
+                if ( ! hasTouch && userOptions.enableKinetics ) {
+                    bindKinetic();
                 }
 
                 scope.$on('$destroy', function() {
                     $listener.removeEventListener( DETECT_EVT, setActiveNode );
                     $listener.removeEventListener( 'scroll', onScrollHandler );
-                    if ( ! hasTouch ) {
-                        $listener.removeEventListener( 'mousedown', tap );
-                    }
+                    unbindKinetic();
                 });
+
+                // expose few methods to the parent controller
+                scope.$parent.connectedScrolls = {
+                    scrollToStart: function () {
+                        cancelAutoScroll();
+
+                        targetLeft = 0;
+                        targetTop = 0;
+                        amplitudeLeft = -10;
+                        amplitudeTop = -10;
+                        isAutoScrolling = true;
+                        autoScrollTracker = requestAnimationFrame(autoScroll);
+                        //scrollTo(0, 0);
+                    },
+                    scrollToStartLeft: function () {
+                        cancelAutoScroll();
+                        scrollTo(0, scrollTop);
+                    },
+                    scrollToStartTop: function () {
+                        cancelAutoScroll();
+                        scrollTo(scrollLeft, 0);
+                    },
+                    scrollToEnd: function () {
+                        var maxScrollLeft = 0;
+                        var maxScrollTop = 0;
+
+                        scope.childNodes.forEach(function (node) {
+                            var $el = node.children[0];
+                            var maxScrollX = $el.scrollWidth - $el.clientWidth;
+                            var maxScrollY = $el.scrollHeight - $el.clientHeight;
+
+                            if ( maxScrollX > maxScrollLeft ) {
+                                maxScrollLeft = maxScrollX;
+                            }
+                            if ( maxScrollY > maxScrollTop ) {
+                                maxScrollTop = maxScrollY;
+                            }
+                        });
+
+                        cancelAutoScroll();
+                        scrollTo(maxScrollLeft, maxScrollTop);
+                    },
+                    scrollToEndLeft: function () {
+                        var maxScrollLeft = 0;
+
+                        scope.childNodes.forEach(function (node) {
+                            var $el = node.children[0];
+                            var maxScrollX = $el.scrollWidth - $el.clientWidth;
+
+                            if ( maxScrollX > maxScrollLeft ) {
+                                maxScrollLeft = maxScrollX;
+                            }
+                        });
+
+                        cancelAutoScroll();
+                        scrollTo(maxScrollLeft, scrollTop);
+                    },
+                    scrollToEndTop: function () {
+                        var maxScrollTop = 0;
+
+                        scope.childNodes.forEach(function (node) {
+                            var $el = node.children[0];
+                            var maxScrollY = $el.scrollHeight - $el.clientHeight;
+
+                            if ( maxScrollY > maxScrollTop ) {
+                                maxScrollTop = maxScrollY;
+                            }
+                        });
+
+                        cancelAutoScroll();
+                        scrollTo(scrollLeft, maxScrollTop);
+                    }
+                }
             },
-            controller: ['$scope', function ConnectScrollsController($scope) {
+            controller: ['$scope', function connectScrollsCtrl($scope) {
                 var childNodes = $scope.childNodes = [];
 
                 this.addScrollArea = function (node) {
@@ -312,7 +404,7 @@ angular.module('ngAugmentNativeScroll', [])
             restrict: 'E',
             transclude: true,
             replace: true,
-            template: '<span ng-transclude></span>',
+            template: '<span  data-name="scroll-area" ng-transclude></span>',
             link: function (scope, element, attrs, connectScrollsCtrl) {
                 element.attr( 'id', 'PARTICIPATING_NODE_' + Math.random().toString().substring(2, 15) );
                 connectScrollsCtrl.addScrollArea(element[0]);

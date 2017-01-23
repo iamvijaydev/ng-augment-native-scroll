@@ -30,10 +30,13 @@ angular.module('app', ['ngAugmentNativeScroll'])
     .controller('ExampleApp.Controller', [
         '$scope',
         'ExampleApp.Factory',
-        function ($scope, factory) {
+        '$timeout',
+        '$window',
+        function ($scope, factory, $timeout, $window) {
             $scope.data = factory.generateData();
-            $scope.getRand = function () {
-                return Math.random().toString().substring(2,5);
+
+            $scope.options = {
+                enableKinetics: true
             }
         }
     ])
