@@ -1,19 +1,22 @@
 'use strict';
 
-angular.module('ngAugmentNativeScroll')
+angular.module('ngAugmentNativeScroll', [])
     .directive('connectScrolls', function () {
         return {
             restrict: 'E',
             scope: {},
             transclude: true,
+            replace: true,
             template: '<span ng-transclude></span>',
-            link: function (scope, element, attrs, controller, transcludeFn) {
-                function findMatchingTarget (target, nodes) {
+            link: function (scope, element) {
+                var findMatchingTarget = function (target, nodes) {
+                    var found;
+
                     if ( ! nodes.length || target.tagName === 'BODY' ) {
                         return 'BODY';
                     }
 
-                    let found = nodes.find(function (node) {
+                    found = nodes.find(function (node) {
                         return node.id === target.id
                     });
 
@@ -34,7 +37,7 @@ angular.module('ngAugmentNativeScroll')
                 var lastScrollTop = 0;
 
                 var setActiveNode = function (e) {
-                    activeId = findMatchingTarget(e.target, scope.childNodes)
+                    activeId = findMatchingTarget(e.target, scope.childNodes);
                 }
 
                 var onScrollHandler = function (e) {
@@ -44,9 +47,9 @@ angular.module('ngAugmentNativeScroll')
                         return;
                     }
 
-                    let target = e.target;
-                    let valX = undefined;
-                    let valY = undefined;
+                    var target = e.target;
+                    var valX = undefined;
+                    var valY = undefined;
 
                     if ( target.clientWidth !== target.scrollWidth ) {
                         valX = target.scrollLeft;
@@ -63,7 +66,7 @@ angular.module('ngAugmentNativeScroll')
                         valY = scrollTop;
                     }
 
-                    childNodes.forEach(function(node) {
+                    scope.childNodes.forEach(function(node) {
                         if ( node.id !== activeId ) {
                             node.children[0].scrollLeft = valX;
                             node.children[0].scrollTop = valY;
@@ -74,7 +77,7 @@ angular.module('ngAugmentNativeScroll')
                 $listener.addEventListener( DETECT_EVT, setActiveNode, true );
                 $listener.addEventListener( 'scroll', onScrollHandler, true );
 
-                scope.on('$destroy', function() {
+                scope.$on('$destroy', function() {
                     $listener.removeEventListener( DETECT_EVT, setActiveNode );
                     $listener.removeEventListener( 'scroll', onScrollHandler );
                 });
@@ -85,15 +88,17 @@ angular.module('ngAugmentNativeScroll')
                 this.addScrollArea = function (node) {
                     childNodes.push(node);
                 }
-            }
+            }]
         }
     })
     .directive('scrollArea', function () {
         return {
-            require: '^^connectScrolls'
+            require: '^^connectScrolls',
             restrict: 'E',
+            transclude: true,
+            replace: true,
             template: '<span ng-transclude></span>',
-            link: function (scope, element) {
+            link: function (scope, element, attrs, tabsCtrl) {
                 element.attr( 'id', 'PARTICIPATING_NODE_' + Math.random().toString().substring(2, 15) );
 
                 tabsCtrl.addScrollArea(element[0]);
