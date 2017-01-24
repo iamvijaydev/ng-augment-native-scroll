@@ -317,14 +317,7 @@ angular.module('ngAugmentNativeScroll', [])
                 scope.$parent.connectedScrolls = {
                     scrollToStart: function () {
                         cancelAutoScroll();
-
-                        targetLeft = 0;
-                        targetTop = 0;
-                        amplitudeLeft = -10;
-                        amplitudeTop = -10;
-                        isAutoScrolling = true;
-                        autoScrollTracker = requestAnimationFrame(autoScroll);
-                        //scrollTo(0, 0);
+                        scrollTo(0, 0);
                     },
                     scrollToStartLeft: function () {
                         cancelAutoScroll();

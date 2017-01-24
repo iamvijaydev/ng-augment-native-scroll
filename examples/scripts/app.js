@@ -41,6 +41,7 @@ angular.module('app', ['ngAugmentNativeScroll'])
             }
 
             $setTimeout(function () {
+                // the exposed methods are now ready to use
                 $log( $scope.connectedScrolls )
             }, 10);
         }
