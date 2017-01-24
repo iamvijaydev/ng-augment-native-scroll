@@ -87,11 +87,7 @@ angular.module('ngAugmentNativeScroll', [])
                     delta = scrollLeft - lastScrollLeft;
                     lastScrollLeft = scrollLeft;
 
-                    if ( delta > 5 || delta < -5 ) {
-                        velocityLeft = 0.05 * (1000 * delta / (1 + elapsed)) + 0.2 * velocityLeft;
-                    } else {
-                        velocityLeft = 0;
-                    }
+                    velocityLeft = userOptions.movingAverage * (1000 * delta / (1 + elapsed)) + 0.2 * velocityLeft;
                 }
 
                 var topTracker = function () {
@@ -103,7 +99,7 @@ angular.module('ngAugmentNativeScroll', [])
                     delta = scrollTop - lastScrollTop;
                     lastScrollTop = scrollTop;
 
-                    velocityTop = 0.1 * (1000 * delta / (1 + elapsed)) + 0.2 * velocityTop;
+                    velocityTop = userOptions.movingAverage * (1000 * delta / (1 + elapsed)) + 0.2 * velocityTop;
                 }
 
                 var scrollTo = function(left, top) {
@@ -300,7 +296,8 @@ angular.module('ngAugmentNativeScroll', [])
                 }
 
                 var defaultOptions = {
-                    enableKinetics: false
+                    enableKinetics: false,
+                    movingAverage: 0.1
                 };
                 var userOptions = angular.extend({}, defaultOptions, scope.options);
 

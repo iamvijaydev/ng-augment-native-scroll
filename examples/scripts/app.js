@@ -31,12 +31,17 @@ angular.module('app', ['ngAugmentNativeScroll'])
         '$scope',
         'ExampleApp.Factory',
         '$timeout',
-        '$window',
-        function ($scope, factory, $timeout, $window) {
+        '$log',
+        function ($scope, factory, $timeout, $log) {
             $scope.data = factory.generateData();
 
             $scope.options = {
-                enableKinetics: true
+                enableKinetics: true,
+                movingAverage: 0.2
             }
+
+            $setTimeout(function () {
+                $log( $scope.connectedScrolls )
+            }, 10);
         }
     ])
