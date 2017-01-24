@@ -38,8 +38,9 @@ I know its not npm or bower ready yet, but you can use it now [main diective fil
 
 ## connect-scrolls exposed methods
 connectScrolls exposed couple of methods to its parent scope with the namespace `connectedScrolls` which can be accessed as `$scope.connectedScrolls`. Since the directive is initialized after the parent scope, its better not expect `$scope.connectedScrolls` as soon as you parent scope is ready. If you have to, you can use it after a delay, [example](https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/examples/scripts/app.js#L43-L46). Here are the list of exposed methods:
+
 | Name  | 	Description |
-|------------|----------------|
+|------|----------------|
 | `scrollToStart`| Scrolls all scroll to start, i:e scrollLeft and scrollTop are set to `0` |
 | `scrollToStartLeft`| Scrolls all scrollLeft to start |
 | `scrollToStartTop`| Scrolls all scrollTop to start |
