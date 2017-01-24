@@ -1,5 +1,5 @@
 # ng Augment Native Scroll
-This is a angular (1.x) directive port of the original experiments with augmenting native scroll [here](https://github.com/iamvijaydev/augment-native-scroll)
+This is a angular (1.x) directive port of the original experiments with [augmenting native scroll](https://github.com/iamvijaydev/augment-native-scroll)
 
 ## Download
 I know its not npm or bower ready yet, but you can use it now [main diective file](https://raw.githubusercontent.com/iamvijaydev/ng-augment-native-scroll/master/src/ngAugmentNativeScroll.js) now. Packages are coming soon.
