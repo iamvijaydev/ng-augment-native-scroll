@@ -32,5 +32,5 @@ I know its not npm or bower ready yet, but you can use it now [main diective fil
 ## connect-scrolls options
 | Option  | 	Description | 	Default  |
 |------------|----------------|-----|
-| `enableKinetics`| This can only be enabled for non-touch devices only. The ability to emulate tap and flick to enter kinetic scrolling. On desktop this can be done by click-hold to drag the scroll area and flick-release to enter kinetic scrolling. Since kinetic/smooth scrolling is available in most devices this is disabled by default. | `false` |
+| `enableKinetics`| This can only be enabled for non-touch devices. The ability to emulate tap and flick to enter kinetic scrolling. On desktop this can be done by click-hold to drag the scroll area and flick-release to enter kinetic scrolling. Since kinetic/smooth scrolling is available in most devices this is disabled by default. | `false` |
 | `movingAverage`| The [moving average filter](https://en.wikipedia.org/wiki/Moving_average) protects the kinetic scroll going to a frenzy state. A lower value will have a slow and smooth kinetic scroll | `0.1` |
