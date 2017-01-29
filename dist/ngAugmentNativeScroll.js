@@ -50,7 +50,8 @@
 	    .value('kineticEngine', __webpack_require__(1))
 	    .factory('utils', __webpack_require__(2))
 	    .directive('connectScrolls', __webpack_require__(3))
-	    .directive('scrollArea', __webpack_require__(4));
+	    .directive('scrollArea', __webpack_require__(4))
+	    .directive('kineticScroll', __webpack_require__(5));
 
 
 /***/ },
@@ -60,6 +61,25 @@
 	'use strict';
 
 	function KineticEngine (context, utils) {
+	    context.scrollLeft = 0;
+	    context.scrollTop = 0;
+	    context.lastScrollLeft = 0;
+	    context.lastScrollTop = 0;
+	    context.targetTop = 0;
+	    context.targetLeft = 0;
+
+	    context.velocityTop = 0;
+	    context.velocityLeft = 0;
+	    context.amplitudeTop = 0;
+	    context.amplitudeLeft = 0;
+
+	    context.timeStamp = 0;
+	    context.referenceX = 0;
+	    context.referenceY = 0;
+	    context.pressed = false;
+	    context.autoScrollTracker = null;
+	    context.isAutoScrolling = false;
+
 	    context.leftTracker = function () {
 	        var now, elapsed, delta;
 
@@ -309,31 +329,12 @@
 	        },
 	        transclude: true,
 	        replace: true,
-	        template: '<span data-name="conntect-scrolls" ng-transclude></span>',
+	        template: '<span data-name="conntect-scroll" ng-transclude></span>',
 	        link: function (scope, element) {
 	            scope.hasTouch = 'ontouchstart' in window;
 	            scope.DETECT_EVT = scope.hasTouch ? 'touchstart' : 'mouseover';
 	            scope.activeId = undefined;
 	            scope.$listener = element[0];
-
-	            scope.scrollLeft = 0;
-	            scope.scrollTop = 0;
-	            scope.lastScrollLeft = 0;
-	            scope.lastScrollTop = 0;
-	            scope.targetTop = 0;
-	            scope.targetLeft = 0;
-
-	            scope.velocityTop = 0;
-	            scope.velocityLeft = 0;
-	            scope.amplitudeTop = 0;
-	            scope.amplitudeLeft = 0;
-
-	            scope.timeStamp = 0;
-	            scope.referenceX = 0;
-	            scope.referenceY = 0;
-	            scope.pressed = false;
-	            scope.autoScrollTracker = null;
-	            scope.isAutoScrolling = false;
 
 	            scope.defaultOptions = {
 	                enableKinetics: false,
@@ -348,7 +349,7 @@
 	            }
 
 	            scope.onScroll = function (e) {
-	                if ( this.pressed || this.isAutoScrolling ) {
+	                if ( scope.pressed || scope.isAutoScrolling ) {
 	                    e.preventDefault();
 	                    e.stopPropagation();
 	                    return;
@@ -491,6 +492,109 @@
 	}
 
 	module.exports = ScrollArea;
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	function KineticScroll (utils, kineticEngine) {
+	    return {
+	        restrict: 'E',
+	        scope: {
+	            options: '='
+	        },
+	        transclude: true,
+	        replace: true,
+	        template: '<span data-name="kinetic-scroll" ng-transclude></span>',
+	        link: function (scope, element) {
+	            scope.hasTouch = 'ontouchstart' in window;
+	            scope.DETECT_EVT = scope.hasTouch ? 'touchstart' : 'mouseover';
+	            scope.$listener = element[0];
+	            scope.childNodes = [ scope.$listener ];
+
+	            scope.defaultOptions = {
+	                enableKinetics: false,
+	                movingAverage: 0.1
+	            };
+	            scope.userOptions = angular.extend({}, scope.defaultOptions, scope.options);
+
+	            kineticEngine.call(this, scope, utils);
+
+	            // expose few methods to the parent controller
+	            scope.$parent.kineticScroll = {
+	                scrollToStart: function () {
+	                    scope.cancelAutoScroll();
+	                    scope.scrollTo(0, 0);
+	                },
+	                scrollToStartLeft: function () {
+	                    scope.cancelAutoScroll();
+	                    scope.scrollTo(0, scope.scrollTop);
+	                },
+	                scrollToStartTop: function () {
+	                    scope.cancelAutoScroll();
+	                    scope.scrollTo(scope.scrollLeft, 0);
+	                },
+	                scrollToEnd: function () {
+	                    var maxScrollLeft = 0;
+	                    var maxScrollTop = 0;
+
+	                    scope.childNodes.forEach(function (node) {
+	                        var $el = node.children[0];
+	                        var maxScrollX = $el.scrollWidth - $el.clientWidth;
+	                        var maxScrollY = $el.scrollHeight - $el.clientHeight;
+
+	                        if ( maxScrollX > maxScrollLeft ) {
+	                            maxScrollLeft = maxScrollX;
+	                        }
+	                        if ( maxScrollY > maxScrollTop ) {
+	                            maxScrollTop = maxScrollY;
+	                        }
+	                    });
+
+	                    scope.cancelAutoScroll();
+	                    scope.scrollTo(maxScrollLeft, maxScrollTop);
+	                },
+	                scrollToEndLeft: function () {
+	                    var maxScrollLeft = 0;
+
+	                    scope.childNodes.forEach(function (node) {
+	                        var $el = node.children[0];
+	                        var maxScrollX = $el.scrollWidth - $el.clientWidth;
+
+	                        if ( maxScrollX > maxScrollLeft ) {
+	                            maxScrollLeft = maxScrollX;
+	                        }
+	                    });
+
+	                    scope.cancelAutoScroll();
+	                    scope.scrollTo(maxScrollLeft, scope.scrollTop);
+	                },
+	                scrollToEndTop: function () {
+	                    var maxScrollTop = 0;
+
+	                    scope.childNodes.forEach(function (node) {
+	                        var $el = node.children[0];
+	                        var maxScrollY = $el.scrollHeight - $el.clientHeight;
+
+	                        if ( maxScrollY > maxScrollTop ) {
+	                            maxScrollTop = maxScrollY;
+	                        }
+	                    });
+
+	                    scope.cancelAutoScroll();
+	                    scope.scrollTo(scope.scrollLeft, maxScrollTop);
+	                }
+	            }
+	        }
+	    }
+	}
+
+	KineticScroll.$inject = ['utils', 'kineticEngine'];
+
+	module.exports = KineticScroll;
 
 
 /***/ }

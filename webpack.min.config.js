@@ -6,7 +6,7 @@ module.exports = {
         'ngAugmentNativeScroll.min': './index.js',
     },
     output: {
-        path: __dirname + '/release',
+        path: __dirname + '/dist',
         filename: '[name].js'
     },
     plugins: [

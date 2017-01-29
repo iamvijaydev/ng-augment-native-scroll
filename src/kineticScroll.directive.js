@@ -1,6 +1,6 @@
 'use strict';
 
-function ConnectScrolls (utils, kineticEngine) {
+function KineticScroll (utils, kineticEngine) {
     return {
         restrict: 'E',
         scope: {
@@ -8,12 +8,12 @@ function ConnectScrolls (utils, kineticEngine) {
         },
         transclude: true,
         replace: true,
-        template: '<span data-name="conntect-scroll" ng-transclude></span>',
+        template: '<span data-name="kinetic-scroll" ng-transclude></span>',
         link: function (scope, element) {
             scope.hasTouch = 'ontouchstart' in window;
             scope.DETECT_EVT = scope.hasTouch ? 'touchstart' : 'mouseover';
-            scope.activeId = undefined;
             scope.$listener = element[0];
+            scope.childNodes = [ scope.$listener ];
 
             scope.defaultOptions = {
                 enableKinetics: false,
@@ -23,54 +23,8 @@ function ConnectScrolls (utils, kineticEngine) {
 
             kineticEngine.call(this, scope, utils);
 
-            scope.setActiveNode = function (e) {
-                scope.activeId = utils.findMatchingTarget(e.target, scope.childNodes);
-            }
-
-            scope.onScroll = function (e) {
-                if ( scope.pressed || scope.isAutoScrolling ) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return;
-                }
-
-                var target = e.target;
-                var valX = undefined;
-                var valY = undefined;
-
-                if ( target.clientWidth !== target.scrollWidth ) {
-                    valX = target.scrollLeft;
-                    scope.lastScrollLeft = scope.scrollLeft;
-                    scope.scrollLeft = valX;
-                } else {
-                    valX = scope.scrollLeft;
-                }
-                if ( target.clientHeight !== target.scrollHeight ) {
-                    valY = target.scrollTop;
-                    scope.lastScrollTop = scope.scrollTop;
-                    scope.scrollTop = valY;
-                } else {
-                    valY = scope.scrollTop;
-                }
-
-                scope.childNodes.forEach(function(node) {
-                    if ( node.id !== scope.activeId ) {
-                        node.children[0].scrollLeft = valX;
-                        node.children[0].scrollTop = valY;
-                    }
-                });
-            }
-
-            scope.$listener.addEventListener( scope.DETECT_EVT, scope.setActiveNode, true );
-            scope.$listener.addEventListener( 'scroll', scope.onScroll, true );
-
-            scope.$on('$destroy', function() {
-                scope.$listener.removeEventListener( scope.DETECT_EVT, scope.setActiveNode );
-                scope.$listener.removeEventListener( 'scroll', scope.onScroll );
-            });
-
             // expose few methods to the parent controller
-            scope.$parent.connectedScrolls = {
+            scope.$parent.kineticScroll = {
                 scrollToStart: function () {
                     scope.cancelAutoScroll();
                     scope.scrollTo(0, 0);
@@ -134,17 +88,10 @@ function ConnectScrolls (utils, kineticEngine) {
                     scope.scrollTo(scope.scrollLeft, maxScrollTop);
                 }
             }
-        },
-        controller: ['$scope', function connectScrollsCtrl($scope) {
-            var childNodes = $scope.childNodes = [];
-
-            this.addScrollArea = function (node) {
-                childNodes.push(node);
-            }
-        }]
+        }
     }
 }
 
-ConnectScrolls.$inject = ['utils', 'kineticEngine'];
+KineticScroll.$inject = ['utils', 'kineticEngine'];
 
-module.exports = ConnectScrolls;
+module.exports = KineticScroll;

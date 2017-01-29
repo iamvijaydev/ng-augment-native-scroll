@@ -1,6 +1,25 @@
 'use strict';
 
 function KineticEngine (context, utils) {
+    context.scrollLeft = 0;
+    context.scrollTop = 0;
+    context.lastScrollLeft = 0;
+    context.lastScrollTop = 0;
+    context.targetTop = 0;
+    context.targetLeft = 0;
+
+    context.velocityTop = 0;
+    context.velocityLeft = 0;
+    context.amplitudeTop = 0;
+    context.amplitudeLeft = 0;
+
+    context.timeStamp = 0;
+    context.referenceX = 0;
+    context.referenceY = 0;
+    context.pressed = false;
+    context.autoScrollTracker = null;
+    context.isAutoScrolling = false;
+
     context.leftTracker = function () {
         var now, elapsed, delta;
 

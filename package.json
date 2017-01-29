@@ -5,8 +5,10 @@
   "main": "src/ngAugmentNativeScroll.js",
   "scripts": {
     "test": "mocha --reporter spec",
-    "eg": "http-server -p 3000 -s",
-    "release": "rimraf release/* && webpack --config ./webpack.config.js  --progress --profile --colors && webpack --config ./webpack.min.config.js  --progress --profile --colors"
+    "eg-serve": "http-server -p 3000 -s",
+    "watch": "webpack --config ./webpack.config.js --watch",
+    "dist": "rimraf release/* && webpack --config ./webpack.config.js  --progress --profile --colors && webpack --config ./webpack.min.config.js  --progress --profile --colors",
+    "dist-serve": "npm run dist && npm run eg-serve"
   },
   "author": "Vijay <vijaydev.in@gmail.com> (http://vijaydev.com/)",
   "license": "MIT",

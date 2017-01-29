@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,36 +8,8 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <div ng-controller="ExampleApp.Controller">
-        <connect-scrolls options="options">
-            <scroll-area>
-                <div id='list' class='brand-scrollbar'>
-                    <ul>
-                        <li class='head'>Rates & Types</li>
-                        <li ng-repeat="item in data.list track by $index" ng-class="{ 'strong': $index % 10 === 0, 'normal': $index %10 !== 0 }">{{ item }}</li>
-                    </ul>
-                </div>
-            </scroll-area>
-            <scroll-area>
-                <div id="table" class='brand-scrollbar'>
-                    <table>
-                        <thead>
-                            <tr class='head'>
-                                <td ng-repeat="cell in data.table[0] track by $index">456</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="row in data.table track by $index" ng-class="{'strong': $index % 10 === 0, 'normal': $index % 10 !== 0}">
-                                <td ng-repeat="cell in row track by $index">{{ cell }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </scroll-area>
-        </connect-scrolls>
-    </div>
-    <script src="./lib/angular.min.js" charset="utf-8"></script>
-    <script src="../release/ngAugmentNativeScroll.js" charset="utf-8"></script>
-    <script src="./scripts/app.js" charset="utf-8"></script>
+    <h1>Examples ng Augment Native Scroll</h1>
+    <a href="./connectedScrolls.html">Connected Scrolls</a>
+    <a href="./kineticScroll.html">Kinetic Scroll</a>
 </body>
 </html>

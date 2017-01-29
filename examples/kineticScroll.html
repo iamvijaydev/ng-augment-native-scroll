@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KineticScroll - ng Agument Native Scroll</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <div ng-controller="ExampleApp.Controller">
+        <kinetic-scroll options="options">
+            <div id="table" class='brand-scrollbar'>
+                <table>
+                    <thead>
+                        <tr class='head'>
+                            <td ng-repeat="cell in data.table[0] track by $index">456</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in data.table track by $index" ng-class="{'strong': $index % 10 === 0, 'normal': $index % 10 !== 0}">
+                            <td ng-repeat="cell in row track by $index">{{ cell }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </kinetic-scroll>
+    </div>
+    <script src="./lib/angular.min.js" charset="utf-8"></script>
+    <script src="../dist/ngAugmentNativeScroll.js" charset="utf-8"></script>
+    <script src="./scripts/kineticScrollExample.js" charset="utf-8"></script>
+</body>
+</html>
