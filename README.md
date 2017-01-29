@@ -56,6 +56,7 @@ Option | Description | Default
 
 ## Exposed methods to $parent
 Both directive `connectScrolls` and `kineticScroll` will expose couple of methods to it's parent scope. With the exposed methods we can move the scroll from parent scope, let's say to start or end. The exposed methods will be available on the namespace `augNs`. Here are the list of exposed methods:
+
 Name | Description
 --- | ---
 `scrollToStart` | Scrolls all scroll to start, i:e scrollLeft and scrollTop are set to `0`
