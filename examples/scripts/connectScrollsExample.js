@@ -40,9 +40,9 @@ angular.module('app', ['ngAugmentNativeScroll'])
                 movingAverage: 0.2
             }
 
-            $setTimeout(function () {
+            $timeout(function () {
                 // the exposed methods are now ready to use
-                $log( $scope.connectedScrolls )
+                console.log( $scope.connectedScrolls )
             }, 10);
         }
     ])

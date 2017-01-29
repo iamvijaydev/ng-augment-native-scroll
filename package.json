@@ -4,8 +4,9 @@
   "description": "Augmenting native scroll for higher functionality",
   "main": "src/ngAugmentNativeScroll.js",
   "scripts": {
-    "test": "mocha --reporter spec",
-    "eg": "http-server -p 3000 -s"
+    "eg-serve": "http-server -p 3000 -s",
+    "dist": "rimraf dist/* && webpack --config ./webpack.config.js && webpack --config ./webpack.config.min.js",
+    "start": "npm run dist && npm run eg-serve"
   },
   "author": "Vijay <vijaydev.in@gmail.com> (http://vijaydev.com/)",
   "license": "MIT",
@@ -14,9 +15,14 @@
     "url": "https://github.com/iamvijaydev/ng-augment-native-scroll"
   },
   "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
     "eslint": "^3.14.0",
     "eslint-config-angular": "^0.5.0",
     "eslint-plugin-angular": "^1.6.1",
-    "http-server": "^0.9.0"
+    "http-server": "^0.9.0",
+    "rimraf": "^2.5.4",
+    "webpack": "^1.14.0"
   }
 }
