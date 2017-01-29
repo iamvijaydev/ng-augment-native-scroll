@@ -4,11 +4,21 @@ _This is a angular (v1.x) directive port of the original experiments with [augme
 
 This module provides few directives to augment native scroll.
 
-`connectScrolls` will connect scrolls within `scrollArea` so that they scroll synchronously. Meaning if one scrolls other will too. For non-touch devices it can also apply kinetic scroll. Here's an [example]().
+`connectScrolls` will connect scrolls within `scrollArea` so that they scroll synchronously. Meaning if one scrolls other will too. For non-touch devices it can also apply kinetic scroll. Here's an [example](https://iamvijaydev.github.io/ng-augment-native-scroll/examples/connectedScrolls.html).
 
-`kineticScroll` will apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. Here's an [example]().
+`kineticScroll` will apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. Here's an [example](https://iamvijaydev.github.io/ng-augment-native-scroll/examples/kineticScroll.html).
 
 **NOTE: Kinetic scroll with mouse events will be applied to non-touch devices only. It will NOT be applied on touch devices.**
+
+## Installation
+Via npm:
+```
+$ npm install ng-augment-native-scroll --save
+```
+Via bower:
+```
+$ bower install ng-augment-native-scroll --save
+```
 
 ## connectScroll > scrollArea: Usage
 These directives can be used like the example below:
@@ -49,7 +59,7 @@ This directive can be used like the example below:
 
 ## Configurable options
 Option | Description | Default
---- | --- | ---
+--- | :--- | :---
 `enableKinetics` | **On touch devices kinetics won't be applied.** Apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. | `true`
 `movingAverage` | The [moving average filter](https://en.wikipedia.org/wiki/Moving_average) protects the kinetic scroll going to a frenzy state. A lower value will have a slow and smooth kinetic scroll | `0.1`
 
@@ -58,7 +68,7 @@ Option | Description | Default
 Both directive `connectScrolls` and `kineticScroll` will expose couple of methods to it's parent scope. With the exposed methods we can move the scroll from parent scope, let's say to start or end. The exposed methods will be available on the namespace `augNs`. Here are the list of exposed methods:
 
 Name | Description
---- | ---
+--- | :---
 `scrollToStart` | Scrolls all scroll to start, i:e scrollLeft and scrollTop are set to `0`
 `scrollToStartLeft` | Scrolls all scrollLeft to start
 `scrollToStartTop` | Scrolls all scrollTop to start
