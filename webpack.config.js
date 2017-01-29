@@ -1,3 +1,6 @@
+var webpack = require('webpack');
+var fs = require('fs');
+
 module.exports = {
     entry: __dirname + '/src/index.js',
     output: {
@@ -12,6 +15,9 @@ module.exports = {
             loader: 'babel'
         }]
     },
+    plugins: [
+        new webpack.BannerPlugin(fs.readFileSync('./LICENSE', 'utf8'))
+    ],
     devtool: 'inline-source-map',
     progress: true,
     profile: true,
