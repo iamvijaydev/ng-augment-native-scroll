@@ -1,13 +1,14 @@
-# ng Augment Native Scroll
-This is a angular (1.x) directive port of the original experiments with [augmenting native scroll](https://github.com/iamvijaydev/augment-native-scroll)
+ng Augment Native scroll
+========================
+_This is a angular (v1.x) directive port of the original experiments with [augment native scroll](https://github.com/iamvijaydev/augment-native-scroll)_
 
-## Download
-I know its not npm or bower ready yet, but you can use it now [main diective file](https://raw.githubusercontent.com/iamvijaydev/ng-augment-native-scroll/master/src/ngAugmentNativeScroll.js) now. Packages are coming soon.
+This module provides few directives to augment native scroll.
+`connectScrolls` will connect scrolls within `scrollArea` so that they scroll synchronously. Meaning if one scrolls other will too. For non-touch devices it can also apply kinetic scroll. Here's an [example]().
+`kineticScroll` will apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. Here's an [example]()
+**NOTE: Kinetic scroll with mouse events will be applied to non-touch devices only. It will NOT be applied on touch devices.**
 
-## Usage
-* After downloading, include the `ngAugmentNativeScroll.js` script into your app.
-* Add the module as a dependency to your app: `angular.module('app', ['ngAugmentNativeScroll'])`
-* Example directive usage:
+## connectScroll > scrollArea: Usage
+These directives can be used like the example below:
 ```html
 <connect-scrolls options="options">
     <scroll-area>
@@ -26,19 +27,32 @@ I know its not npm or bower ready yet, but you can use it now [main diective fil
     </scroll-area>
 </connect-scrolls>
 ```
-* Wrap the scroll(s) that you want to connect or have scroll synchronously with `connect-scrolls` directive. It also accepts a option object (more below)
-* Wrap each scroll with `scroll-area` directive
+`scrollArea` requires `connectScroll`. Similarly `connectScroll` expects `scrollArea` to define the scrollable areas to be connected. Neither can be used alone.
 
-## connect-scrolls options
+## kineticScroll: Usage
+This directive can be used like the example below:
+```html
+<kinetic-scroll options="options">
+    <table id="table">
+        <tbody>
+            <tr ng-repeat="row in data.table track by $index">
+                <td ng-repeat="cell in row track by $index">{{ cell }}</td>
+            </tr>
+        </tbody>
+    </table>
+</kinetic-scroll>
+```
+`kineticScroll` expects its first child to be a scrollable area. It's always better to wrap just the scrollable area we want to augment with.
+
+## Configure options
 | Option  | 	Description | 	Default  |
 |------------|----------------|-----|
-| `enableKinetics`| This can only be enabled for non-touch devices. The ability to emulate tap and flick to enter kinetic scrolling. On desktop this can be done by click-hold to drag the scroll area and flick-release to enter kinetic scrolling. Since kinetic/smooth scrolling is available in most devices this is disabled by default. | `false` |
+| `enableKinetics`| **On touch devices kinetic won't be applied.** Apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. | `true` |
 | `movingAverage`| The [moving average filter](https://en.wikipedia.org/wiki/Moving_average) protects the kinetic scroll going to a frenzy state. A lower value will have a slow and smooth kinetic scroll | `0.1` |
 
 
-## connect-scrolls exposed methods
-connectScrolls exposed couple of methods to its parent scope with the namespace `connectedScrolls` which can be accessed as `$scope.connectedScrolls`. Since the directive is initialized after the parent scope, its better not expect `$scope.connectedScrolls` as soon as you parent scope is ready. If you have to, you can use it after a delay, [example](https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/examples/scripts/app.js#L43-L46). Here are the list of exposed methods:
-
+## Exposed methods to $parent
+Both directive `connectScrolls` and `kineticScroll` will expose couple of methods to it's parent scope. With the exposed methods we can move the scroll from parent scope, let's say to start or end. The exposed methods will be available on the namespace `augNs`. Here are the list of exposed methods:
 | Name  | 	Description |
 |------|----------------|
 | `scrollToStart`| Scrolls all scroll to start, i:e scrollLeft and scrollTop are set to `0` |
@@ -47,3 +61,11 @@ connectScrolls exposed couple of methods to its parent scope with the namespace 
 | `scrollToEnd`| Scrolls all scroll to end or max scroll, i:e scrollLeft and scrollTop are set to possible max scroll value |
 | `scrollToEndLeft`| Scrolls all scrollLeft to end or max scroll left value |
 | `scrollToEndTop`| Scrolls all scrollTop to end or max scroll top value |
+Here is an example of how it can be used on the $parent scope
+```javascript
+DataService.fetchUserList()
+    .then(function (data) {
+        $scope.userList = data;
+        $scope.augNs.scrollToStart();
+    })
+```

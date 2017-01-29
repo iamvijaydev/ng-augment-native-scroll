@@ -201,6 +201,75 @@ function KineticEngine (context, utils) {
     context.$on('$destroy', function() {
         context.$listener.removeEventListener( 'mousedown', context.tap );
     });
+
+
+    var scrollGen = function (start, left, top) {
+        var toStart = start ? true : false;
+        var applyLeft = left ? true : false;
+        var applyTop = top ? true : false;
+
+        return function () {
+            var targetLeft = 0,
+                targetTop = 0,
+                amplitudeLeft = 0,
+                amplitudeTop = 0,
+                maxScrollLeft = 0,
+                maxScrollTop = 0;
+
+            if ( toStart ) {
+                targetLeft = applyLeft ? 0 : context.scrollLeft;
+                targetTop = applyTop ? 0 : context.scrollTop;
+                amplitudeLeft = applyLeft ? -context.scrollLeft : 0;
+                amplitudeTop = applyTop ? -context.scrollTop : 0;
+            } else {
+                context.childNodes.forEach(function (node) {
+                    var $el = node.children[0];
+                    var maxScrollX = $el.scrollWidth - $el.clientWidth;
+                    var maxScrollY = $el.scrollHeight - $el.clientHeight;
+
+                    if ( maxScrollX > maxScrollLeft ) {
+                        maxScrollLeft = maxScrollX;
+                    }
+                    if ( maxScrollY > maxScrollTop ) {
+                        maxScrollTop = maxScrollY;
+                    }
+                });
+
+                targetLeft = applyLeft ? maxScrollLeft : context.scrollLeft;
+                targetTop = applyTop ? maxScrollTop : context.scrollTop;
+                amplitudeLeft = applyLeft ? 1 + context.scrollLeft : 0;
+                amplitudeTop = applyTop ? 1 + context.scrollTop : 0;
+            }
+
+            if ( amplitudeLeft !== 0 || amplitudeTop !== 0 ) {
+                context.cancelAutoScroll();
+
+                context.timeStamp = utils.getTime();
+                context.targetLeft = targetLeft;
+                context.targetTop = targetTop;
+                context.amplitudeLeft = amplitudeLeft;
+                context.amplitudeTop = amplitudeTop;
+
+                context.isAutoScrolling = true;
+                context.autoScrollTracker = requestAnimationFrame(context.autoScroll);
+            }
+        }
+    }
+
+    var start = true,
+        notStart = false,
+        left = true,
+        notLeft = false,
+        top = true,
+        notTop = true;
+    context.exposedMethods = {
+        scrollToStart: scrollGen(start, left, top),
+        scrollToStartLeft: scrollGen(start, left, notTop),
+        scrollToStartTop: scrollGen(start, notLeft, top),
+        scrollToEnd: scrollGen(notStart, left, top),
+        scrollToEndLeft: scrollGen(notStart, left, notTop),
+        scrollToEndTop: scrollGen(notStart, notLeft, top)
+    }
 }
 
 module.exports = KineticEngine;

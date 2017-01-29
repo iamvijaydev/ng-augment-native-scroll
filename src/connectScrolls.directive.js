@@ -1,6 +1,6 @@
 'use strict';
 
-function ConnectScrolls (utils, kineticEngine) {
+function ConnectScrolls (augNsUtils, augNsOptions, kineticEngine) {
     return {
         restrict: 'E',
         scope: {
@@ -15,16 +15,12 @@ function ConnectScrolls (utils, kineticEngine) {
             scope.activeId = undefined;
             scope.$listener = element[0];
 
-            scope.defaultOptions = {
-                enableKinetics: false,
-                movingAverage: 0.1
-            };
-            scope.userOptions = angular.extend({}, scope.defaultOptions, scope.options);
+            scope.userOptions = angular.extend({}, augNsOptions, scope.options);
 
-            kineticEngine.call(this, scope, utils);
+            kineticEngine.call(this, scope, augNsUtils);
 
             scope.setActiveNode = function (e) {
-                scope.activeId = utils.findMatchingTarget(e.target, scope.childNodes);
+                scope.activeId = augNsUtils.findMatchingTarget(e.target, scope.childNodes);
             }
 
             scope.onScroll = function (e) {
@@ -70,94 +66,7 @@ function ConnectScrolls (utils, kineticEngine) {
             });
 
             // expose few methods to the parent controller
-            scope.$parent.connectedScrolls = {
-                scrollToStart: function () {
-                    scope.cancelAutoScroll();
-
-                    scope.timeStamp = utils.getTime();
-                    scope.targetLeft = 0;
-                    scope.targetTop = 0;
-                    scope.amplitudeLeft = -scope.scrollLeft
-                    scope.amplitudeTop = -scope.scrollTop;
-
-                    scope.isAutoScrolling = true;
-                    scope.autoScrollTracker = requestAnimationFrame(scope.autoScroll);
-                },
-                scrollToStartLeft: function () {
-                    scope.cancelAutoScroll();
-
-                    scope.timeStamp = utils.getTime();
-                    scope.targetLeft = 0;
-                    scope.targetTop = scope.scrollTop;
-                    scope.amplitudeLeft = -scope.scrollLeft;
-                    scope.amplitudeTop = 0;
-
-                    scope.isAutoScrolling = true;
-                    scope.autoScrollTracker = requestAnimationFrame(scope.autoScroll);
-                },
-                scrollToStartTop: function () {
-                    scope.cancelAutoScroll();
-
-                    scope.timeStamp = utils.getTime();
-                    scope.targetLeft = scope.scrollLeft;
-                    scope.targetTop = 0;
-                    scope.amplitudeLeft = 0;
-                    scope.amplitudeTop = -scope.scrollTop;
-
-                    scope.isAutoScrolling = true;
-                    scope.autoScrollTracker = requestAnimationFrame(scope.autoScroll);
-                },
-                scrollToEnd: function () {
-                    var maxScrollLeft = 0;
-                    var maxScrollTop = 0;
-
-                    scope.childNodes.forEach(function (node) {
-                        var $el = node.children[0];
-                        var maxScrollX = $el.scrollWidth - $el.clientWidth;
-                        var maxScrollY = $el.scrollHeight - $el.clientHeight;
-
-                        if ( maxScrollX > maxScrollLeft ) {
-                            maxScrollLeft = maxScrollX;
-                        }
-                        if ( maxScrollY > maxScrollTop ) {
-                            maxScrollTop = maxScrollY;
-                        }
-                    });
-
-                    scope.cancelAutoScroll();
-                    scope.scrollTo(maxScrollLeft, maxScrollTop);
-                },
-                scrollToEndLeft: function () {
-                    var maxScrollLeft = 0;
-
-                    scope.childNodes.forEach(function (node) {
-                        var $el = node.children[0];
-                        var maxScrollX = $el.scrollWidth - $el.clientWidth;
-
-                        if ( maxScrollX > maxScrollLeft ) {
-                            maxScrollLeft = maxScrollX;
-                        }
-                    });
-
-                    scope.cancelAutoScroll();
-                    scope.scrollTo(maxScrollLeft, scope.scrollTop);
-                },
-                scrollToEndTop: function () {
-                    var maxScrollTop = 0;
-
-                    scope.childNodes.forEach(function (node) {
-                        var $el = node.children[0];
-                        var maxScrollY = $el.scrollHeight - $el.clientHeight;
-
-                        if ( maxScrollY > maxScrollTop ) {
-                            maxScrollTop = maxScrollY;
-                        }
-                    });
-
-                    scope.cancelAutoScroll();
-                    scope.scrollTo(scope.scrollLeft, maxScrollTop);
-                }
-            }
+            scope.$parent.augNs = scope.exposedMethods;
         },
         controller: ['$scope', function connectScrollsCtrl($scope) {
             var childNodes = $scope.childNodes = [];
@@ -169,6 +78,6 @@ function ConnectScrolls (utils, kineticEngine) {
     }
 }
 
-ConnectScrolls.$inject = ['utils', 'kineticEngine'];
+ConnectScrolls.$inject = ['augNsUtils', 'augNsOptions', 'kineticEngine'];
 
 module.exports = ConnectScrolls;
