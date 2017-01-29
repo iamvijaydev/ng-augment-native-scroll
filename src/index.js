@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('ngAugmentNativeScroll', [])
-    .value('kineticEngine', require('./kineticEngine.value'))
-    .factory('utils', require('./utils.factory'))
-    .directive('connectScrolls', require('./connectScrolls.directive'))
-    .directive('scrollArea', require('./scrollArea.directive'))
-    .directive('kineticScroll', require('./kineticScroll.directive'));
+    .factory('utils', require('./utils.factory.js'))
+    .value('kineticEngine', require('./kineticEngine.value.js'))
+    .directive('connectScrolls', require('./connectScrolls.directive.js'))
+    .directive('scrollArea', require('./scrollArea.directive.js'))
+    .directive('kineticScroll', require('./kineticScroll.directive.js'));

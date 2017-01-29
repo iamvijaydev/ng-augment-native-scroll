@@ -73,15 +73,39 @@ function ConnectScrolls (utils, kineticEngine) {
             scope.$parent.connectedScrolls = {
                 scrollToStart: function () {
                     scope.cancelAutoScroll();
-                    scope.scrollTo(0, 0);
+
+                    scope.timeStamp = utils.getTime();
+                    scope.targetLeft = 0;
+                    scope.targetTop = 0;
+                    scope.amplitudeLeft = -scope.scrollLeft
+                    scope.amplitudeTop = -scope.scrollTop;
+
+                    scope.isAutoScrolling = true;
+                    scope.autoScrollTracker = requestAnimationFrame(scope.autoScroll);
                 },
                 scrollToStartLeft: function () {
                     scope.cancelAutoScroll();
-                    scope.scrollTo(0, scope.scrollTop);
+
+                    scope.timeStamp = utils.getTime();
+                    scope.targetLeft = 0;
+                    scope.targetTop = scope.scrollTop;
+                    scope.amplitudeLeft = -scope.scrollLeft;
+                    scope.amplitudeTop = 0;
+
+                    scope.isAutoScrolling = true;
+                    scope.autoScrollTracker = requestAnimationFrame(scope.autoScroll);
                 },
                 scrollToStartTop: function () {
                     scope.cancelAutoScroll();
-                    scope.scrollTo(scope.scrollLeft, 0);
+
+                    scope.timeStamp = utils.getTime();
+                    scope.targetLeft = scope.scrollLeft;
+                    scope.targetTop = 0;
+                    scope.amplitudeLeft = 0;
+                    scope.amplitudeTop = -scope.scrollTop;
+
+                    scope.isAutoScrolling = true;
+                    scope.autoScrollTracker = requestAnimationFrame(scope.autoScroll);
                 },
                 scrollToEnd: function () {
                     var maxScrollLeft = 0;

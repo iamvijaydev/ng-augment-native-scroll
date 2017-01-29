@@ -124,7 +124,7 @@ function KineticEngine (context, utils) {
         context.cancelAutoScroll();
 
         context.$listener.addEventListener( 'mousemove', context.swipe, true );
-        context.$listener.addEventListener( 'mouseup', context.end, true );
+        context.$listener.addEventListener( 'mouseup', context.release, true );
 
         e.preventDefault();
         e.stopPropagation();
@@ -163,7 +163,7 @@ function KineticEngine (context, utils) {
         return false;
     }
 
-    context.end = function(e) {
+    context.release = function(e) {
         context.pressed = false;
 
         context.timeStamp = utils.getTime();
@@ -187,7 +187,7 @@ function KineticEngine (context, utils) {
         context.autoScrollTracker = requestAnimationFrame(context.autoScroll);
 
         context.$listener.removeEventListener( 'mousemove', context.swipe );
-        context.$listener.removeEventListener( 'mouseup', context.end );
+        context.$listener.removeEventListener( 'mouseup', context.release );
 
         e.preventDefault();
         e.stopPropagation();
