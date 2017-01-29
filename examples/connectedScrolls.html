@@ -11,18 +11,18 @@
     <div ng-controller="ExampleApp.Controller">
         <connect-scrolls options="options">
             <scroll-area>
-                <div id='list' class='brand-scrollbar'>
+                <div id="list" class="brand-scrollbar">
                     <ul>
-                        <li class='head'>Rates & Types</li>
+                        <li class="head">Rates & Types</li>
                         <li ng-repeat="item in data.list track by $index" ng-class="{ 'strong': $index % 10 === 0, 'normal': $index %10 !== 0 }">{{ item }}</li>
                     </ul>
                 </div>
             </scroll-area>
             <scroll-area>
-                <div id="table" class='brand-scrollbar'>
+                <div id="table" class="brand-scrollbar">
                     <table>
                         <thead>
-                            <tr class='head'>
+                            <tr class="head">
                                 <td ng-repeat="cell in data.table[0] track by $index">456</td>
                             </tr>
                         </thead>
