@@ -20,6 +20,9 @@ Via bower:
 $ bower install ng-augment-native-scroll --save
 ```
 
+Direct use: Download the files in [/dist](https://github.com/iamvijaydev/ng-augment-native-scroll/tree/master/dist)
+
+
 ## connectScroll > scrollArea: Usage
 These directives can be used like the example below:
 ```html
