@@ -102,3 +102,6 @@ DataService.fetchUserList()
         $scope.augNs.scrollToStart();
     })
 ```
+
+# TODO
+Testing and codecoverage.
