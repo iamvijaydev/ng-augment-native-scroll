@@ -18,7 +18,6 @@ module.exports = {
     plugins: [
         new webpack.BannerPlugin(fs.readFileSync('./LICENSE', 'utf8'))
     ],
-    devtool: 'inline-source-map',
     progress: true,
     profile: true,
     colors: true
