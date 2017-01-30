@@ -127,7 +127,6 @@ function KineticEngine (context, utils) {
         context.$listener.addEventListener( 'mouseup', context.release, true );
 
         e.preventDefault();
-        e.stopPropagation();
         return false;
     }
 
@@ -159,7 +158,6 @@ function KineticEngine (context, utils) {
         }
 
         e.preventDefault();
-        e.stopPropagation();
         return false;
     }
 
@@ -190,7 +188,6 @@ function KineticEngine (context, utils) {
         context.$listener.removeEventListener( 'mouseup', context.release );
 
         e.preventDefault();
-        e.stopPropagation();
         return false;
     }
 

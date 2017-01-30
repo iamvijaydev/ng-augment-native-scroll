@@ -1,4 +1,5 @@
 function augNsUtils () {
+     /*eslint-disable angular/window-service, angular/timeout-service */
     (function() {
         var lastTime = 0;
         var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -8,7 +9,7 @@ function augNsUtils () {
         }
 
         if ( ! window.requestAnimationFrame ) {
-            window.requestAnimationFrame = function(callback, element) {
+            window.requestAnimationFrame = function(callback) {
                 var currTime = new Date().getTime();
                 var timeToCall = Math.max(0, 16 - (currTime - lastTime));
                 var id = window.setTimeout(function() {
@@ -19,9 +20,10 @@ function augNsUtils () {
             };
         }
 
-        if ( ! window.cancelAnimationFrame )
+        if ( ! window.cancelAnimationFrame ) {
             window.cancelAnimationFrame = function(id) {
-            clearTimeout(id);
+                clearTimeout(id);
+            }
         }
     }());
 
