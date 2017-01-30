@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/ng-augment-native-scroll.svg)](https://badge.fury.io/js/ng-augment-native-scroll) [![Bower version](https://badge.fury.io/bo/ng-augment-native-scroll.svg)](https://badge.fury.io/bo/ng-augment-native-scroll)
+
 ng Augment Native scroll
 ========================
 _This is a angular (v1.x) directive port of the original experiments with [augment native scroll](https://github.com/iamvijaydev/augment-native-scroll)_
