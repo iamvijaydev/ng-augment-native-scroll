@@ -6,9 +6,8 @@ _This is a angular (v1.x) directive port of the original experiments with [augme
 
 This module provides few directives to augment native scroll.
 
-`connectScrolls` will connect scrolls within `scrollArea` so that they scroll synchronously. Meaning if one scrolls other will too. For non-touch devices it can also apply kinetic scroll. Here's an [example](https://iamvijaydev.github.io/ng-augment-native-scroll/examples/connectedScrolls.html).
-
-`kineticScroll` will apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. Here's an [example](https://iamvijaydev.github.io/ng-augment-native-scroll/examples/kineticScroll.html).
+* `connectScrolls` will connect scrolls within `scrollArea` so that they scroll synchronously. Meaning if one scrolls other will too. For non-touch devices it can also apply kinetic scroll. Here's an [example](https://iamvijaydev.github.io/ng-augment-native-scroll/examples/connectedScrolls.html).
+* `kineticScroll` will apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. Here's an [example](https://iamvijaydev.github.io/ng-augment-native-scroll/examples/kineticScroll.html).
 
 **NOTE: Kinetic scroll with mouse events will be applied to non-touch devices only. It will NOT be applied on touch devices.**
 
@@ -21,8 +20,19 @@ Via bower:
 ```
 $ bower install ng-augment-native-scroll --save
 ```
-
 Direct use: Download the files in [/dist](https://github.com/iamvijaydev/ng-augment-native-scroll/tree/master/dist)
+
+
+## Include package
+The module is wrapped with [UMD](https://webpack.github.io/docs/configuration.html#output-librarytarget) so can be used as commonjs require or as global. For require:
+```javascript
+var angular = require('angular');
+angular.module('app', [require('ng-augment-native-scroll')]);
+```
+For global, make sure you have included `angular.js` and `ngAugmentNativeScroll.js`, before using it your script as:
+```javascript
+angular.module('app', ['ng-augment-native-scroll']);
+```
 
 
 ## connectScroll > scrollArea: Usage
