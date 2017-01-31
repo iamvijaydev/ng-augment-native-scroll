@@ -126,8 +126,7 @@ function KineticEngine (context, utils) {
         context.$listener.addEventListener( 'mousemove', context.swipe, true );
         context.$listener.addEventListener( 'mouseup', context.release, true );
 
-        if ( ! utils.preventDefaultException(e.target, context.userOptions.preventDefaultException) ) {
-            console.log('preventing');
+        if ( utils.preventDefaultException(e.target, context.userOptions.preventDefaultException) ) {
             e.preventDefault();
         }
     }
@@ -197,10 +196,6 @@ function KineticEngine (context, utils) {
 
 
     var scrollGen = function (start, left, top) {
-        var toStart = start ? true : false;
-        var applyLeft = left ? true : false;
-        var applyTop = top ? true : false;
-
         return function () {
             var targetLeft = 0,
                 targetTop = 0,
@@ -209,11 +204,11 @@ function KineticEngine (context, utils) {
                 maxScrollLeft = 0,
                 maxScrollTop = 0;
 
-            if ( toStart ) {
-                targetLeft = applyLeft ? 0 : context.scrollLeft;
-                targetTop = applyTop ? 0 : context.scrollTop;
-                amplitudeLeft = applyLeft ? -context.scrollLeft : 0;
-                amplitudeTop = applyTop ? -context.scrollTop : 0;
+            if ( start ) {
+                targetLeft = left ? 0 : context.scrollLeft;
+                targetTop = top ? 0 : context.scrollTop;
+                amplitudeLeft = left ? -context.scrollLeft : 0;
+                amplitudeTop = top ? -context.scrollTop : 0;
             } else {
                 context.childNodes.forEach(function (node) {
                     var $el = node.children[0];
@@ -228,10 +223,10 @@ function KineticEngine (context, utils) {
                     }
                 });
 
-                targetLeft = applyLeft ? maxScrollLeft : context.scrollLeft;
-                targetTop = applyTop ? maxScrollTop : context.scrollTop;
-                amplitudeLeft = applyLeft ? 1 + context.scrollLeft : 0;
-                amplitudeTop = applyTop ? 1 + context.scrollTop : 0;
+                targetLeft = left ? maxScrollLeft : context.scrollLeft;
+                targetTop = top ? maxScrollTop : context.scrollTop;
+                amplitudeLeft = left ? maxScrollLeft - context.scrollLeft : 0;
+                amplitudeTop = top ? maxScrollTop - context.scrollTop : 0;
             }
 
             if ( amplitudeLeft !== 0 || amplitudeTop !== 0 ) {
@@ -254,7 +249,7 @@ function KineticEngine (context, utils) {
         left = true,
         notLeft = false,
         top = true,
-        notTop = true;
+        notTop = false;
 
     context.exposedMethods = {
         scrollToStart: scrollGen(start, left, top),

@@ -1,20 +1,20 @@
 /*!
- * v0.9.2
- * 
+ * v0.11.0
+ *
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Vijay Dev (http://vijaydev.com/)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,7 +22,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -318,8 +318,7 @@
 	        context.$listener.addEventListener('mousemove', context.swipe, true);
 	        context.$listener.addEventListener('mouseup', context.release, true);
 
-	        if (!utils.preventDefaultException(e.target, context.userOptions.preventDefaultException)) {
-	            console.log('preventing');
+	        if (utils.preventDefaultException(e.target, context.userOptions.preventDefaultException)) {
 	            e.preventDefault();
 	        }
 	    };
@@ -388,10 +387,6 @@
 	    });
 
 	    var scrollGen = function (start, left, top) {
-	        var toStart = start ? true : false;
-	        var applyLeft = left ? true : false;
-	        var applyTop = top ? true : false;
-
 	        return function () {
 	            var targetLeft = 0,
 	                targetTop = 0,
@@ -400,11 +395,11 @@
 	                maxScrollLeft = 0,
 	                maxScrollTop = 0;
 
-	            if (toStart) {
-	                targetLeft = applyLeft ? 0 : context.scrollLeft;
-	                targetTop = applyTop ? 0 : context.scrollTop;
-	                amplitudeLeft = applyLeft ? -context.scrollLeft : 0;
-	                amplitudeTop = applyTop ? -context.scrollTop : 0;
+	            if (start) {
+	                targetLeft = left ? 0 : context.scrollLeft;
+	                targetTop = top ? 0 : context.scrollTop;
+	                amplitudeLeft = left ? -context.scrollLeft : 0;
+	                amplitudeTop = top ? -context.scrollTop : 0;
 	            } else {
 	                context.childNodes.forEach(function (node) {
 	                    var $el = node.children[0];
@@ -419,10 +414,10 @@
 	                    }
 	                });
 
-	                targetLeft = applyLeft ? maxScrollLeft : context.scrollLeft;
-	                targetTop = applyTop ? maxScrollTop : context.scrollTop;
-	                amplitudeLeft = applyLeft ? 1 + context.scrollLeft : 0;
-	                amplitudeTop = applyTop ? 1 + context.scrollTop : 0;
+	                targetLeft = left ? maxScrollLeft : context.scrollLeft;
+	                targetTop = top ? maxScrollTop : context.scrollTop;
+	                amplitudeLeft = left ? maxScrollLeft - context.scrollLeft : 0;
+	                amplitudeTop = top ? maxScrollTop - context.scrollTop : 0;
 	            }
 
 	            if (amplitudeLeft !== 0 || amplitudeTop !== 0) {
@@ -445,7 +440,7 @@
 	        left = true,
 	        notLeft = false,
 	        top = true,
-	        notTop = true;
+	        notTop = false;
 
 	    context.exposedMethods = {
 	        scrollToStart: scrollGen(start, left, top),
