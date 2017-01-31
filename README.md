@@ -12,31 +12,36 @@ This module provides few directives to augment native scroll.
 **NOTE: Kinetic scroll with mouse events will be applied to non-touch devices only. It will NOT be applied on touch devices.**
 
 
-# Installation
-Via npm:
+# Installation and usage
+###Via npm:
 ```
 $ npm install ng-augment-native-scroll --save
 ```
-Via bower:
+Then use it as:
+```javascript
+// main.js
+var angular = require('angular');
+angular.module('mainApp', [
+    require('ng-augment-native-scroll')
+]);
+```
+###Via bower:
 ```
 $ bower install ng-augment-native-scroll --save
 ```
-Direct use: Download the files in [/dist](https://github.com/iamvijaydev/ng-augment-native-scroll/tree/master/dist)
-
-
-# Include package
-The module is wrapped with [UMD](https://webpack.github.io/docs/configuration.html#output-librarytarget) so can be used as commonjs require or as global. For require:
-```javascript
-var angular = require('angular');
-angular.module('app', [require('ng-augment-native-scroll')]);
+This package make use of [commonjs](https://nodejs.org/docs/latest/api/modules.html) (require, exports), so you can use it as shown above for npm package. The main file can be integrated using [these tools](https://bower.io/docs/tools/).
+###Direct use:
+Download the files in [/dist](https://github.com/iamvijaydev/ng-augment-native-scroll/tree/master/dist). Include it in your HTML file and use it in your script file as shown below:
+```html
+<script src="path/to/file" charset="utf-8"></script>
 ```
-For global, make sure you have included `angular.js` and `ngAugmentNativeScroll.js`, before using it in your script as:
 ```javascript
-angular.module('app', ['ng-augment-native-scroll']);
+// main.js
+angular.module('mainApp', ['ng-augment-native-scroll']);
 ```
 
 
-# connectScroll > scrollArea: Usage
+# `connectScroll` and `scrollArea` directive usage
 These directives can be used like the example below:
 ```html
 <connect-scrolls options="options">
@@ -56,10 +61,10 @@ These directives can be used like the example below:
     </scroll-area>
 </connect-scrolls>
 ```
-`scrollArea` requires `connectScroll`. Similarly `connectScroll` expects `scrollArea` to define the scrollable areas to be connected. Neither can be used alone.
+`scrollArea` requires `connectScroll` and `connectScroll` expects `scrollArea` to define the scrollable areas to be connected. Neither can be used alone.
 
 
-# kineticScroll: Usage
+# `kineticScroll` directive usage
 This directive can be used like the example below:
 ```html
 <kinetic-scroll options="options">
@@ -76,10 +81,11 @@ This directive can be used like the example below:
 
 
 # Configurable options
-Option | Description | Default
+Option | Description | Type | Default
 --- | :--- | :---
-`enableKinetics` | **On touch devices kinetics won't be applied.** Apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. | `true`
-`movingAverage` | The [moving average filter](https://en.wikipedia.org/wiki/Moving_average) protects the kinetic scroll going to a frenzy state. A lower value will have a slow and smooth kinetic scroll | `0.1`
+`enableKinetics` | **On touch devices kinetics won't be applied.** Apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. | Boolean | `true`
+`movingAverage` | The [moving average filter](https://en.wikipedia.org/wiki/Moving_average) protects the kinetic scroll going to a frenzy state. A lower value will have a slow and smooth kinetic scroll | Number | `0.1`
+`preventDefaultException` | Mouse events for kinetic scrolling is prevented from executing default action, i:e`e.preventDefault()` is called internally. This can make elements non-responsive. For e.g: select wont open. You can provide `tagName`, `class` or `id` that when matched wont call `preventDefault`. By default input, textarea, button and select are exempted. | Object | `{ tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT)$/ }`
 
 
 # Exposed methods to $parent
@@ -105,3 +111,7 @@ DataService.fetchUserList()
 
 # TODO
 Testing and codecoverage.
+
+#Future
+* Implement pull-down-to functionality - refresh or load previous page to name a few
+* Implement pull-up-to functionality - load next page may be
