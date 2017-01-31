@@ -86,7 +86,7 @@ Option | Description | Type | Default
 --- | :--- | :--- | :---
 `enableKinetics` | **On touch devices kinetics won't be applied.** Apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. | Boolean | `true`
 `movingAverage` | The [moving average filter](https://en.wikipedia.org/wiki/Moving_average) protects the kinetic scroll going to a frenzy state. A lower value will have a slow and smooth kinetic scroll | Number | `0.1`
-`preventDefaultException` | Mouse events for kinetic scrolling is prevented from executing default action, i:e`e.preventDefault()` is called internally. This can make elements non-responsive. For e.g: select wont open. You can provide `tagName`, `class` or `id` that when matched wont call `preventDefault`. By default input, textarea, button and select are exempted. | Object | INPUT|TEXTAREA|BUTTON|SELECT
+`preventDefaultException` | Mouse events for kinetic scrolling is prevented from executing default action, i:e`e.preventDefault()` is called internally. This can make elements non-responsive. For e.g: select wont open. You can provide `tagName`, `class` or `id` that when matched wont call `preventDefault`. By default input, textarea, button and select are exempted. | Object | [Look here](https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/src/augNsOptions.value.js#L6-L8)
 
 
 # Exposed methods to $parent
