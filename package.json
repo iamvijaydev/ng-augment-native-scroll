@@ -1,8 +1,8 @@
 {
   "name": "ng-augment-native-scroll",
   "version": "0.8.0",
-  "description": "Augmenting native scroll for higher functionality",
-  "main": "src/ngAugmentNativeScroll.js",
+  "description": "Augmenting native scroll with higher functionality",
+  "main": "src/index.js",
   "scripts": {
     "eg-serve": "http-server -p 3000 -s",
     "dist": "rimraf dist/* && webpack --config ./webpack.config.js && webpack --config ./webpack.config.min.js",
@@ -12,10 +12,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/iamvijaydev/ng-augment-native-scroll"
-  },
-  "peerDependencies": {
-    "angular": "<= ^1.6.1"
+    "url": "git@github.com:iamvijaydev/ng-augment-native-scroll.git"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -26,12 +23,20 @@
     "eslint-plugin-angular": "^1.6.1",
     "http-server": "^0.9.0",
     "rimraf": "^2.5.4",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "webpack-version-file": "^0.1.2"
   },
   "keywords": [
-    "native",
     "scroll",
-    "angular",
-    "kinetic"
-  ]
+    "augment scroll",
+    "native scroll",
+    "connect scrolls",
+    "kinetic scroll",
+    "pull down refresh",
+    "pull up previous",
+    "angular"
+  ],
+  "dependencies": {
+    "angular": "^1.6.1"
+  }
 }

@@ -1,5 +1,7 @@
 'use strict';
 
+var angular = require('angular');
+
 angular.module('ngAugmentNativeScroll', [])
     .factory('augNsUtils', require('./augNsUtils.factory.js'))
     .value('augNsOptions', require('./augNsOptions.value.js'))

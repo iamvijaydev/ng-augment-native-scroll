@@ -1,28 +1,35 @@
 {
   "name": "ng-augment-native-scroll",
-  "description": "Augmenting native scroll for higher functionality",
-  "main": "dist/ngAugmentNativeScroll.js",
+  "description": "Augmenting native scroll with higher functionality",
+  "main": "src/index.js",
   "authors": [
     "Vijay <vijaydev.in@gmail.com> (http://vijaydev.com/)"
   ],
   "license": "MIT",
   "keywords": [
-    "native",
     "scroll",
-    "angular",
-    "kinetic"
+    "augment scroll",
+    "native scroll",
+    "connect scrolls",
+    "kinetic scroll",
+    "pull down refresh",
+    "pull up previous",
+    "angular"
   ],
   "homepage": "https://github.com/iamvijaydev/ng-augment-native-scroll",
-  "moduleType": [
-    "amd",
-    "globals",
-    "node"
-  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:iamvijaydev/ng-augment-native-scroll.git"
+  }
+  "moduleType": "node",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular": "^1.6.1"
+  }
 }

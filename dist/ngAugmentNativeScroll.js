@@ -1,4 +1,6 @@
 /*!
+ * v0.8.0
+ * 
  * MIT License
  * 
  * Copyright (c) 2017 Vijay Dev (http://vijaydev.com/)
@@ -22,17 +24,7 @@
  * SOFTWARE.
  * 
  */
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["ngAugmentNativeScroll"] = factory();
-	else
-		root["ngAugmentNativeScroll"] = factory();
-})(window, function() {
-return /******/ (function(modules) { // webpackBootstrap
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -80,10 +72,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	angular.module('ngAugmentNativeScroll', []).factory('augNsUtils', __webpack_require__(1)).value('augNsOptions', __webpack_require__(2)).value('kineticEngine', __webpack_require__(3)).directive('connectScrolls', __webpack_require__(4)).directive('scrollArea', __webpack_require__(5)).directive('kineticScroll', __webpack_require__(6));
+	var angular = __webpack_require__(1);
+
+	angular.module('ngAugmentNativeScroll', []).factory('augNsUtils', __webpack_require__(2)).value('augNsOptions', __webpack_require__(3)).value('kineticEngine', __webpack_require__(4)).directive('connectScrolls', __webpack_require__(5)).directive('scrollArea', __webpack_require__(6)).directive('kineticScroll', __webpack_require__(7));
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	module.exports = angular;
+
+/***/ },
+/* 2 */
 /***/ function(module, exports) {
 
 	function augNsUtils() {
@@ -152,6 +152,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        getTime: Date.now || function getTime() {
 	            return new Date().utils.getTime();
+	        },
+	        preventDefaultException: function (el, exceptions) {
+	            for (var i in exceptions) {
+	                if (exceptions[i].test(el[i])) {
+	                    return true;
+	                }
+	            }
+
+	            return false;
 	        }
 	    };
 	}
@@ -159,20 +168,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = augNsUtils;
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	var augNsOptions = {
 	    enableKinetics: true,
-	    movingAverage: 0.1
+	    movingAverage: 0.1,
+	    preventDefaultException: {
+	        tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT)$/
+	    }
 	};
 
 	module.exports = augNsOptions;
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -306,8 +318,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        context.$listener.addEventListener('mousemove', context.swipe, true);
 	        context.$listener.addEventListener('mouseup', context.release, true);
 
-	        e.preventDefault();
-	        return false;
+	        if (utils.preventDefaultException(e.target, context.userOptions.preventDefaultException)) {
+	            e.preventDefault();
+	        }
 	    };
 
 	    context.swipe = function (e) {
@@ -336,12 +349,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            context.scrollTo(context.scrollLeft + deltaX, context.scrollTop + deltaY);
 	        }
-
-	        e.preventDefault();
-	        return false;
 	    };
 
-	    context.release = function (e) {
+	    context.release = function () {
 	        context.pressed = false;
 
 	        context.timeStamp = utils.getTime();
@@ -366,9 +376,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        context.$listener.removeEventListener('mousemove', context.swipe);
 	        context.$listener.removeEventListener('mouseup', context.release);
-
-	        e.preventDefault();
-	        return false;
 	    };
 
 	    if (!context.hasTouch && context.userOptions.enableKinetics) {
@@ -438,6 +445,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        notLeft = false,
 	        top = true,
 	        notTop = true;
+
 	    context.exposedMethods = {
 	        scrollToStart: scrollGen(start, left, top),
 	        scrollToStartLeft: scrollGen(start, left, notTop),
@@ -451,7 +459,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = KineticEngine;
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -539,7 +547,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ConnectScrolls;
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -561,7 +569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ScrollArea;
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -596,6 +604,4 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = KineticScroll;
 
 /***/ }
-/******/ ])
-});
-;
+/******/ ]);

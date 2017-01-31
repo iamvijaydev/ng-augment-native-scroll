@@ -126,8 +126,9 @@ function KineticEngine (context, utils) {
         context.$listener.addEventListener( 'mousemove', context.swipe, true );
         context.$listener.addEventListener( 'mouseup', context.release, true );
 
-        e.preventDefault();
-        return false;
+        if ( utils.preventDefaultException(e.target, context.userOptions.preventDefaultException) ) {
+            e.preventDefault();
+        }
     }
 
     context.swipe = function (e) {
@@ -156,12 +157,9 @@ function KineticEngine (context, utils) {
 
             context.scrollTo( context.scrollLeft + deltaX, context.scrollTop + deltaY );
         }
-
-        e.preventDefault();
-        return false;
     }
 
-    context.release = function(e) {
+    context.release = function() {
         context.pressed = false;
 
         context.timeStamp = utils.getTime();
@@ -186,9 +184,6 @@ function KineticEngine (context, utils) {
 
         context.$listener.removeEventListener( 'mousemove', context.swipe );
         context.$listener.removeEventListener( 'mouseup', context.release );
-
-        e.preventDefault();
-        return false;
     }
 
     if ( ! context.hasTouch && context.userOptions.enableKinetics ) {
@@ -259,6 +254,7 @@ function KineticEngine (context, utils) {
         notLeft = false,
         top = true,
         notTop = true;
+        
     context.exposedMethods = {
         scrollToStart: scrollGen(start, left, top),
         scrollToStartLeft: scrollGen(start, left, notTop),

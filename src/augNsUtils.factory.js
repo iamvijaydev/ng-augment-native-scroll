@@ -64,6 +64,15 @@ function augNsUtils () {
         },
         getTime: Date.now || function getTime () {
             return new Date().utils.getTime();
+        },
+        preventDefaultException: function (el, exceptions) {
+            for ( var i in exceptions ) {
+                if ( exceptions[i].test(el[i]) ) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
