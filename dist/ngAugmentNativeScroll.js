@@ -318,7 +318,8 @@
 	        context.$listener.addEventListener('mousemove', context.swipe, true);
 	        context.$listener.addEventListener('mouseup', context.release, true);
 
-	        if (utils.preventDefaultException(e.target, context.userOptions.preventDefaultException)) {
+	        if (!utils.preventDefaultException(e.target, context.userOptions.preventDefaultException)) {
+	            console.log('preventing');
 	            e.preventDefault();
 	        }
 	    };

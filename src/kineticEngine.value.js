@@ -126,7 +126,8 @@ function KineticEngine (context, utils) {
         context.$listener.addEventListener( 'mousemove', context.swipe, true );
         context.$listener.addEventListener( 'mouseup', context.release, true );
 
-        if ( utils.preventDefaultException(e.target, context.userOptions.preventDefaultException) ) {
+        if ( ! utils.preventDefaultException(e.target, context.userOptions.preventDefaultException) ) {
+            console.log('preventing');
             e.preventDefault();
         }
     }
@@ -254,7 +255,7 @@ function KineticEngine (context, utils) {
         notLeft = false,
         top = true,
         notTop = true;
-        
+
     context.exposedMethods = {
         scrollToStart: scrollGen(start, left, top),
         scrollToStartLeft: scrollGen(start, left, notTop),

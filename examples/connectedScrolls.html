@@ -13,7 +13,13 @@
             <scroll-area>
                 <div id="list" class="brand-scrollbar">
                     <ul>
-                        <li class="head">Rates & Types</li>
+                        <li class="head">
+                            <select>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </li>
                         <li ng-repeat="item in data.list track by $index" ng-class="{ 'strong': $index % 10 === 0, 'normal': $index %10 !== 0 }">{{ item }}</li>
                     </ul>
                 </div>
