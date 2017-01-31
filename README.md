@@ -30,6 +30,7 @@ angular.module('mainApp', [
 $ bower install ng-augment-native-scroll --save
 ```
 This package make use of [commonjs](https://nodejs.org/docs/latest/api/modules.html) (require, exports), so you can use it as shown above for npm package. The main file can be integrated using [these tools](https://bower.io/docs/tools/).
+
 ###Direct use:
 Download the files in [/dist](https://github.com/iamvijaydev/ng-augment-native-scroll/tree/master/dist). Include it in your HTML file and use it in your script file as shown below:
 ```html
@@ -82,7 +83,7 @@ This directive can be used like the example below:
 
 # Configurable options
 Option | Description | Type | Default
---- | :--- | :---
+--- | :--- | :--- | :---
 `enableKinetics` | **On touch devices kinetics won't be applied.** Apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. | Boolean | `true`
 `movingAverage` | The [moving average filter](https://en.wikipedia.org/wiki/Moving_average) protects the kinetic scroll going to a frenzy state. A lower value will have a slow and smooth kinetic scroll | Number | `0.1`
 `preventDefaultException` | Mouse events for kinetic scrolling is prevented from executing default action, i:e`e.preventDefault()` is called internally. This can make elements non-responsive. For e.g: select wont open. You can provide `tagName`, `class` or `id` that when matched wont call `preventDefault`. By default input, textarea, button and select are exempted. | Object | `{ tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT)$/ }`
