@@ -73,6 +73,28 @@ function augNsUtils () {
             }
 
             return false;
+        },
+        getMaxScroll: function (nodes) {
+            var maxScrollLeft = 0,
+                maxScrollTop = 0;
+
+            nodes.forEach(function (node) {
+                var $el = node.children[0];
+                var maxScrollX = $el.scrollWidth - $el.clientWidth;
+                var maxScrollY = $el.scrollHeight - $el.clientHeight;
+
+                if ( maxScrollX > maxScrollLeft ) {
+                    maxScrollLeft = maxScrollX;
+                }
+                if ( maxScrollY > maxScrollTop ) {
+                    maxScrollTop = maxScrollY;
+                }
+            });
+
+            return {
+                left: maxScrollLeft,
+                top: maxScrollTop
+            }
         }
     }
 }

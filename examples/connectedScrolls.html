@@ -41,6 +41,34 @@
                 </div>
             </scroll-area>
         </connect-scrolls>
+        <div class="interact" style="z-index: 1000;
+    position: absolute;
+    right: 0;">
+            <span class="interact__toggle"></span>
+            <ul class="interact_list">
+                <li class="interact_item">
+                    <button class="form-item" ng-click="augNs.scrollToStart()">Scroll To Start</button>
+                </li>
+                <li class="interact_item">
+                    <button class="form-item" ng-click="augNs.scrollToStartLeft()">Scroll To Start Left</button>
+                </li>
+                <li class="interact_item">
+                    <button class="form-item" ng-click="augNs.scrollToStartTop()">Scroll To Start Top</button>
+                </li>
+                <li class="interact_item">
+                    <button class="form-item" ng-click="augNs.scrollToEnd()">Scroll To End</button>
+                </li>
+                <li class="interact_item">
+                    <button class="form-item" ng-click="augNs.scrollToEndLeft()">Scroll To End Left</button>
+                </li>
+                <li class="interact_item">
+                    <button class="form-item" ng-click="augNs.scrollToEndTop()">Scroll To End Top</button>
+                </li>
+                <li class="interact_item">
+                    <button class="form-item" ng-click="augNs.scrollToEndTop()">Scroll To Position</button>
+                </li>
+            </ul>
+        </div>
     </div>
     <script src="./lib/angular.stable.min.js" charset="utf-8"></script>
     <script src="../dist/ngAugmentNativeScroll.js" charset="utf-8"></script>
