@@ -420,13 +420,14 @@ p {
 .interact {
     z-index: 1000;
     position: absolute;
-    right: -200px;
+    right: -201px;
     top: 0;
     bottom: 0;
     width: 200px;
-    background: rgba(0, 0, 0, 0.9);
+    background: #e2deff;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
+    border-left: 1px solid #b1b1b1;
 }
 
 .interact--open {
@@ -437,7 +438,43 @@ p {
     width: 40px;
     height: 40px;
     position: absolute;
-    top: 10px;
+    top: 40px;
     left: -40px;
-    background: #000;
+    background: #e2deff;
+    font-size: 30px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 3px 0 0 3px;
+    border: 1px solid #b1b1b1;
+    border-width: 1px 0 1px 1px;
+    cursor: pointer;
+    color: #525161;
+}
+
+.interact__list {
+    list-style: none;
+}
+
+.interact__item {
+    margin: 15px;
+    padding-bottom: 15px;
+}
+
+.interact__item:not(:last-child) {
+    border-bottom: 1px solid #cccbd4;
+}
+
+.form-item {
+    background: #f1c40f;
+    border: 1px solid #caa308;
+    color: #847438;
+    border-radius: 3px;
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 12px;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
 }
