@@ -13,6 +13,7 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
     position: relative;
     user-select: none;
+    overflow: hidden;
 }
 
 .brand-scrollbar::-webkit-scrollbar-track
@@ -412,4 +413,31 @@ p {
     color: #fff;
     background-color: #5cb85c;
     border-color: #4cae4c;
+}
+
+
+
+.interact {
+    z-index: 1000;
+    position: absolute;
+    right: -200px;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.interact--open {
+    right: 0;
+}
+
+.interact__toggle {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 10px;
+    left: -40px;
+    background: #000;
 }

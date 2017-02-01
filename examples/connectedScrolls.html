@@ -41,31 +41,36 @@
                 </div>
             </scroll-area>
         </connect-scrolls>
-        <div class="interact" style="z-index: 1000;
-    position: absolute;
-    right: 0;">
-            <span class="interact__toggle"></span>
-            <ul class="interact_list">
-                <li class="interact_item">
+        <div class="interact" ng-class="{ 'interact--open': interact }">
+            <span class="interact__toggle" ng-click="toggle()"></span>
+            <ul class="interact__list">
+                <li class="interact__item">
                     <button class="form-item" ng-click="augNs.scrollToStart()">Scroll To Start</button>
                 </li>
-                <li class="interact_item">
+                <li class="interact__item">
                     <button class="form-item" ng-click="augNs.scrollToStartLeft()">Scroll To Start Left</button>
                 </li>
-                <li class="interact_item">
+                <li class="interact__item">
                     <button class="form-item" ng-click="augNs.scrollToStartTop()">Scroll To Start Top</button>
                 </li>
-                <li class="interact_item">
+                <li class="interact__item">
                     <button class="form-item" ng-click="augNs.scrollToEnd()">Scroll To End</button>
                 </li>
-                <li class="interact_item">
+                <li class="interact__item">
                     <button class="form-item" ng-click="augNs.scrollToEndLeft()">Scroll To End Left</button>
                 </li>
-                <li class="interact_item">
+                <li class="interact__item">
                     <button class="form-item" ng-click="augNs.scrollToEndTop()">Scroll To End Top</button>
                 </li>
-                <li class="interact_item">
-                    <button class="form-item" ng-click="augNs.scrollToEndTop()">Scroll To Position</button>
+                <li class="interact__item">
+                    <input class="form-item" type="text" pattern="[0-9]+" placeholder="Scroll to left value" ng-model="scrollToLeft">
+                    <input class="form-item" type="text" pattern="[0-9]+" placeholder="Scroll to top value" ng-model="scrollToTop">
+                    <button class="form-item" ng-click="augNs.scrollToValue(scrollToLeft, scrollToTop)">Scroll To Position</button>
+                </li>
+                <li class="interact__item">
+                    <input class="form-item" type="text" pattern="[0-9]+" placeholder="Scroll by left value" ng-model="scrollByLeft">
+                    <input class="form-item" type="text" pattern="[0-9]+" placeholder="Scroll by top value" ng-model="scrollByTop">
+                    <button class="form-item" ng-click="augNs.scrollByValue(scrollByLeft, scrollByTop)">Scroll By Position</button>
                 </li>
             </ul>
         </div>

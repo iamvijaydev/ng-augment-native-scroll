@@ -249,10 +249,28 @@ function KineticEngine (context, utils) {
         scrollToEnd: scrollGen(notStart, left, top),
         scrollToEndLeft: scrollGen(notStart, left, notTop),
         scrollToEndTop: scrollGen(notStart, notLeft, top),
-        scrollTo: function (left, top) {
+        scrollToValue: function (left, top) {
             var maxScroll = utils.getMaxScroll(context.childNodes),
-                targetLeft = left <= maxScroll.left && left >= 0 ? left : context.scrollLeft,
-                targetTop = top <= maxScroll.top && top >= 0 ? top : context.scrollTop,
+                numLeft = isNaN( parseInt(left) ) ? context.scrollLeft : parseInt(left),
+                numTop = isNaN( parseInt(top) ) ? context.scrollTop : parseInt(top),
+                targetLeft = numLeft > maxScroll.left ? maxScroll.left : (numLeft < 0 ? 0 : numLeft),
+                targetTop = numTop > maxScroll.top ? maxScroll.top : (numTop < 0 ? 0 : numTop),
+                moveLeft = context.scrollLeft - targetLeft !== 0 ? true : false,
+                moveTop = context.scrollTop - targetTop !== 0 ? true : false,
+                amplitudeLeft = moveLeft ? targetLeft - context.scrollLeft : 0,
+                amplitudeTop = moveTop ? targetTop - context.scrollTop : 0;
+
+                console.log(numLeft, numTop);
+                console.log(targetLeft, targetTop, amplitudeLeft, amplitudeTop);
+
+            context.triggerAutoScroll(targetLeft, targetTop, amplitudeLeft, amplitudeTop);
+        },
+        scrollByValue: function (left, top) {
+            var maxScroll = utils.getMaxScroll(context.childNodes),
+                numLeft = isNaN( parseInt(left) ) ? context.scrollLeft : parseInt(left) + context.scrollLeft,
+                numTop = isNaN( parseInt(top) ) ? context.scrollTop : parseInt(top) + context.scrollTop,
+                targetLeft = numLeft > maxScroll.left ? maxScroll.left : (numLeft < 0 ? 0 : numLeft),
+                targetTop = numTop > maxScroll.top ? maxScroll.top : (numTop < 0 ? 0 : numTop),
                 moveLeft = context.scrollLeft - targetLeft !== 0 ? true : false,
                 moveTop = context.scrollTop - targetTop !== 0 ? true : false,
                 amplitudeLeft = moveLeft ? targetLeft - context.scrollLeft : 0,

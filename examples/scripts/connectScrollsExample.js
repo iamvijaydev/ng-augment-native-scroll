@@ -44,5 +44,10 @@ angular.module('app', ['ngAugmentNativeScroll'])
                 // the exposed methods are now ready to use
                 console.log( $scope.augNs )
             }, 10);
+
+            $scope.interact = false;
+            $scope.toggle = function () {
+                $scope.interact = !$scope.interact;
+            }
         }
     ])
