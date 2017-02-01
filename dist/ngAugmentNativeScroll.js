@@ -449,12 +449,39 @@
 	        };
 	    };
 
+	    var scrollToBy = function (addTo) {
+	        return function (left, top) {
+	            var maxScroll, numLeft, corrLeft, numTop, corrTop, targetLeft, targetTop, moveLeft, moveTop, amplitudeLeft, amplitudeTop;
+
+	            maxScroll = utils.getMaxScroll(context.childNodes);
+
+	            numLeft = parseInt(left);
+	            numTop = parseInt(top);
+
+	            corrLeft = isNaN(numLeft) ? context.scrollLeft : addTo ? numLeft + context.scrollLeft : numLeft;
+	            corrTop = isNaN(numTop) ? context.scrollTop : addTo ? numTop + context.scrollTop : numTop;
+
+	            targetLeft = corrLeft > maxScroll.left ? maxScroll.left : corrLeft < 0 ? 0 : corrLeft;
+	            targetTop = corrTop > maxScroll.top ? maxScroll.top : corrTop < 0 ? 0 : corrTop;
+
+	            moveLeft = context.scrollLeft - targetLeft !== 0 ? true : false;
+	            moveTop = context.scrollTop - targetTop !== 0 ? true : false;
+
+	            amplitudeLeft = moveLeft ? targetLeft - context.scrollLeft : 0;
+	            amplitudeTop = moveTop ? targetTop - context.scrollTop : 0;
+
+	            context.triggerAutoScroll(targetLeft, targetTop, amplitudeLeft, amplitudeTop);
+	        };
+	    };
+
 	    var start = true,
 	        notStart = false,
 	        left = true,
 	        notLeft = false,
 	        top = true,
-	        notTop = false;
+	        notTop = false,
+	        toValue = false,
+	        byValue = true;
 
 	    context.exposedMethods = {
 	        scrollToStart: scrollGen(start, left, top),
@@ -463,35 +490,8 @@
 	        scrollToEnd: scrollGen(notStart, left, top),
 	        scrollToEndLeft: scrollGen(notStart, left, notTop),
 	        scrollToEndTop: scrollGen(notStart, notLeft, top),
-	        scrollToValue: function (left, top) {
-	            var maxScroll = utils.getMaxScroll(context.childNodes),
-	                numLeft = isNaN(parseInt(left)) ? context.scrollLeft : parseInt(left),
-	                numTop = isNaN(parseInt(top)) ? context.scrollTop : parseInt(top),
-	                targetLeft = numLeft > maxScroll.left ? maxScroll.left : numLeft < 0 ? 0 : numLeft,
-	                targetTop = numTop > maxScroll.top ? maxScroll.top : numTop < 0 ? 0 : numTop,
-	                moveLeft = context.scrollLeft - targetLeft !== 0 ? true : false,
-	                moveTop = context.scrollTop - targetTop !== 0 ? true : false,
-	                amplitudeLeft = moveLeft ? targetLeft - context.scrollLeft : 0,
-	                amplitudeTop = moveTop ? targetTop - context.scrollTop : 0;
-
-	            console.log(numLeft, numTop);
-	            console.log(targetLeft, targetTop, amplitudeLeft, amplitudeTop);
-
-	            context.triggerAutoScroll(targetLeft, targetTop, amplitudeLeft, amplitudeTop);
-	        },
-	        scrollByValue: function (left, top) {
-	            var maxScroll = utils.getMaxScroll(context.childNodes),
-	                numLeft = isNaN(parseInt(left)) ? context.scrollLeft : parseInt(left) + context.scrollLeft,
-	                numTop = isNaN(parseInt(top)) ? context.scrollTop : parseInt(top) + context.scrollTop,
-	                targetLeft = numLeft > maxScroll.left ? maxScroll.left : numLeft < 0 ? 0 : numLeft,
-	                targetTop = numTop > maxScroll.top ? maxScroll.top : numTop < 0 ? 0 : numTop,
-	                moveLeft = context.scrollLeft - targetLeft !== 0 ? true : false,
-	                moveTop = context.scrollTop - targetTop !== 0 ? true : false,
-	                amplitudeLeft = moveLeft ? targetLeft - context.scrollLeft : 0,
-	                amplitudeTop = moveTop ? targetTop - context.scrollTop : 0;
-
-	            context.triggerAutoScroll(targetLeft, targetTop, amplitudeLeft, amplitudeTop);
-	        }
+	        scrollToValue: scrollToBy(toValue),
+	        scrollByValue: scrollToBy(byValue)
 	    };
 	}
 
