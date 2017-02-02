@@ -161,6 +161,28 @@
 	            }
 
 	            return false;
+	        },
+	        getMaxScroll: function (nodes) {
+	            var maxScrollLeft = 0,
+	                maxScrollTop = 0;
+
+	            nodes.forEach(function (node) {
+	                var $el = node.children[0];
+	                var maxScrollX = $el.scrollWidth - $el.clientWidth;
+	                var maxScrollY = $el.scrollHeight - $el.clientHeight;
+
+	                if (maxScrollX > maxScrollLeft) {
+	                    maxScrollLeft = maxScrollX;
+	                }
+	                if (maxScrollY > maxScrollTop) {
+	                    maxScrollTop = maxScrollY;
+	                }
+	            });
+
+	            return {
+	                left: maxScrollLeft,
+	                top: maxScrollTop
+	            };
 	        }
 	    };
 	}
@@ -233,7 +255,7 @@
 	        context.velocityTop = context.userOptions.movingAverage * (1000 * delta / (1 + elapsed)) + 0.2 * context.velocityTop;
 	    };
 
-	    context.scrollTo = function (left, top) {
+	    context.scroll = function (left, top) {
 	        var correctedLeft = Math.round(left);
 	        var correctedTop = Math.round(top);
 
@@ -282,13 +304,28 @@
 	            scrollY = 0;
 	        }
 
-	        context.scrollTo(context.targetLeft + scrollX, context.targetTop + scrollY);
+	        context.scroll(context.targetLeft + scrollX, context.targetTop + scrollY);
 
 	        if (scrollX !== 0 || scrollY !== 0) {
 	            context.autoScrollTracker = requestAnimationFrame(context.autoScroll);
 	        } else {
 	            context.isAutoScrolling = false;
 	            context.autoScrollTracker = null;
+	        }
+	    };
+
+	    context.triggerAutoScroll = function (targetLeft, targetTop, amplitudeLeft, amplitudeTop) {
+	        if (amplitudeLeft !== 0 || amplitudeTop !== 0) {
+	            context.cancelAutoScroll();
+
+	            context.timeStamp = utils.getTime();
+	            context.targetLeft = targetLeft;
+	            context.targetTop = targetTop;
+	            context.amplitudeLeft = amplitudeLeft;
+	            context.amplitudeTop = amplitudeTop;
+
+	            context.isAutoScrolling = true;
+	            context.autoScrollTracker = requestAnimationFrame(context.autoScroll);
 	        }
 	    };
 
@@ -347,32 +384,32 @@
 	            context.topTracker();
 	            context.leftTracker();
 
-	            context.scrollTo(context.scrollLeft + deltaX, context.scrollTop + deltaY);
+	            context.scroll(context.scrollLeft + deltaX, context.scrollTop + deltaY);
 	        }
 	    };
 
 	    context.release = function () {
+	        var targetLeft, targetTop, amplitudeLeft, amplitudeTop;
+
 	        context.pressed = false;
 
-	        context.timeStamp = utils.getTime();
 	        context.topTracker();
 	        context.leftTracker();
 
-	        if (context.velocityTop > 10 || context.velocityTop < -10) {
-	            context.amplitudeTop = 0.8 * context.velocityTop;
-	            context.targetTop = Math.round(context.scrollTop + context.amplitudeTop);
-	        } else {
-	            context.targetTop = context.scrollTop;
-	        }
 	        if (context.velocityLeft > 10 || context.velocityLeft < -10) {
-	            context.amplitudeLeft = 0.8 * context.velocityLeft;
-	            context.targetLeft = Math.round(context.scrollLeft + context.amplitudeLeft);
+	            amplitudeLeft = 0.8 * context.velocityLeft;
+	            targetLeft = Math.round(context.scrollLeft + amplitudeLeft);
 	        } else {
-	            context.targetLeft = context.scrollLeft;
+	            targetLeft = context.scrollLeft;
+	        }
+	        if (context.velocityTop > 10 || context.velocityTop < -10) {
+	            amplitudeTop = 0.8 * context.velocityTop;
+	            targetTop = Math.round(context.scrollTop + amplitudeTop);
+	        } else {
+	            targetTop = context.scrollTop;
 	        }
 
-	        context.isAutoScrolling = true;
-	        context.autoScrollTracker = requestAnimationFrame(context.autoScroll);
+	        context.triggerAutoScroll(targetLeft, targetTop, amplitudeLeft, amplitudeTop);
 
 	        context.$listener.removeEventListener('mousemove', context.swipe);
 	        context.$listener.removeEventListener('mouseup', context.release);
@@ -392,8 +429,7 @@
 	                targetTop = 0,
 	                amplitudeLeft = 0,
 	                amplitudeTop = 0,
-	                maxScrollLeft = 0,
-	                maxScrollTop = 0;
+	                maxScroll = {};
 
 	            if (start) {
 	                targetLeft = left ? 0 : context.scrollLeft;
@@ -401,37 +437,40 @@
 	                amplitudeLeft = left ? -context.scrollLeft : 0;
 	                amplitudeTop = top ? -context.scrollTop : 0;
 	            } else {
-	                context.childNodes.forEach(function (node) {
-	                    var $el = node.children[0];
-	                    var maxScrollX = $el.scrollWidth - $el.clientWidth;
-	                    var maxScrollY = $el.scrollHeight - $el.clientHeight;
+	                maxScroll = utils.getMaxScroll(context.childNodes);
 
-	                    if (maxScrollX > maxScrollLeft) {
-	                        maxScrollLeft = maxScrollX;
-	                    }
-	                    if (maxScrollY > maxScrollTop) {
-	                        maxScrollTop = maxScrollY;
-	                    }
-	                });
-
-	                targetLeft = left ? maxScrollLeft : context.scrollLeft;
-	                targetTop = top ? maxScrollTop : context.scrollTop;
-	                amplitudeLeft = left ? maxScrollLeft - context.scrollLeft : 0;
-	                amplitudeTop = top ? maxScrollTop - context.scrollTop : 0;
+	                targetLeft = left ? maxScroll.left : context.scrollLeft;
+	                targetTop = top ? maxScroll.top : context.scrollTop;
+	                amplitudeLeft = left ? maxScroll.left - context.scrollLeft : 0;
+	                amplitudeTop = top ? maxScroll.top - context.scrollTop : 0;
 	            }
 
-	            if (amplitudeLeft !== 0 || amplitudeTop !== 0) {
-	                context.cancelAutoScroll();
+	            context.triggerAutoScroll(targetLeft, targetTop, amplitudeLeft, amplitudeTop);
+	        };
+	    };
 
-	                context.timeStamp = utils.getTime();
-	                context.targetLeft = targetLeft;
-	                context.targetTop = targetTop;
-	                context.amplitudeLeft = amplitudeLeft;
-	                context.amplitudeTop = amplitudeTop;
+	    var scrollToBy = function (addTo) {
+	        return function (left, top) {
+	            var maxScroll, numLeft, corrLeft, numTop, corrTop, targetLeft, targetTop, moveLeft, moveTop, amplitudeLeft, amplitudeTop;
 
-	                context.isAutoScrolling = true;
-	                context.autoScrollTracker = requestAnimationFrame(context.autoScroll);
-	            }
+	            maxScroll = utils.getMaxScroll(context.childNodes);
+
+	            numLeft = parseInt(left);
+	            numTop = parseInt(top);
+
+	            corrLeft = isNaN(numLeft) ? context.scrollLeft : addTo ? numLeft + context.scrollLeft : numLeft;
+	            corrTop = isNaN(numTop) ? context.scrollTop : addTo ? numTop + context.scrollTop : numTop;
+
+	            targetLeft = corrLeft > maxScroll.left ? maxScroll.left : corrLeft < 0 ? 0 : corrLeft;
+	            targetTop = corrTop > maxScroll.top ? maxScroll.top : corrTop < 0 ? 0 : corrTop;
+
+	            moveLeft = context.scrollLeft - targetLeft !== 0 ? true : false;
+	            moveTop = context.scrollTop - targetTop !== 0 ? true : false;
+
+	            amplitudeLeft = moveLeft ? targetLeft - context.scrollLeft : 0;
+	            amplitudeTop = moveTop ? targetTop - context.scrollTop : 0;
+
+	            context.triggerAutoScroll(targetLeft, targetTop, amplitudeLeft, amplitudeTop);
 	        };
 	    };
 
@@ -440,7 +479,9 @@
 	        left = true,
 	        notLeft = false,
 	        top = true,
-	        notTop = false;
+	        notTop = false,
+	        toValue = false,
+	        byValue = true;
 
 	    context.exposedMethods = {
 	        scrollToStart: scrollGen(start, left, top),
@@ -448,7 +489,9 @@
 	        scrollToStartTop: scrollGen(start, notLeft, top),
 	        scrollToEnd: scrollGen(notStart, left, top),
 	        scrollToEndLeft: scrollGen(notStart, left, notTop),
-	        scrollToEndTop: scrollGen(notStart, notLeft, top)
+	        scrollToEndTop: scrollGen(notStart, notLeft, top),
+	        scrollToPosition: scrollToBy(toValue),
+	        scrollByValue: scrollToBy(byValue)
 	    };
 	}
 

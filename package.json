@@ -6,7 +6,8 @@
   "scripts": {
     "eg-serve": "http-server -p 3000 -s",
     "dist": "rimraf dist/* && webpack --config ./webpack.config.js && webpack --config ./webpack.config.min.js",
-    "start": "npm run dist && npm run eg-serve"
+    "dev": "webpack",
+    "start": "npm run dev && npm run eg-serve"
   },
   "author": "Vijay <vijaydev.in@gmail.com> (http://vijaydev.com/)",
   "license": "MIT",
