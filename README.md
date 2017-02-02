@@ -33,10 +33,10 @@ This package make use of [commonjs](https://nodejs.org/docs/latest/api/modules.h
 
 ###Direct use:
 Download the files in [/dist](https://github.com/iamvijaydev/ng-augment-native-scroll/tree/master/dist). Include it in your HTML file and use it in your script file as shown below:
-```html
-<script src="path/to/file" charset="utf-8"></script>
 ```
-```javascript
+// template.html
+<script src="path/to/file" charset="utf-8"></script>
+
 // main.js
 angular.module('mainApp', ['ng-augment-native-scroll']);
 ```
@@ -100,6 +100,8 @@ Name | Description
 `scrollToEnd` | Scrolls all scroll to end or max scroll, i:e scrollLeft and scrollTop are set to possible max scroll value
 `scrollToEndLeft` | Scrolls all scrollLeft to end or max scroll left value
 `scrollToEndTop` | Scrolls all scrollTop to end or max scroll top value
+`scrollToPosition` | Scrolls to the positions provided as arguments. `$scope.augNs.scrollToPosition({Number} left, {Number} top)`
+`scrollByValue` | Scroll to new positions by adding the arguments provided to current positions. `$scope.augNs.scrollByValue({Number} left, {Number} top)`
 
 Here is an example of how it can be used on the $parent scope:
 ```javascript
