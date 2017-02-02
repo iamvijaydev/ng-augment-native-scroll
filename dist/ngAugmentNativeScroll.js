@@ -490,7 +490,7 @@
 	        scrollToEnd: scrollGen(notStart, left, top),
 	        scrollToEndLeft: scrollGen(notStart, left, notTop),
 	        scrollToEndTop: scrollGen(notStart, notLeft, top),
-	        scrollToValue: scrollToBy(toValue),
+	        scrollToPosition: scrollToBy(toValue),
 	        scrollByValue: scrollToBy(byValue)
 	    };
 	}

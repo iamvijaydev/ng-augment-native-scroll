@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Connected Scrolls - ng Agument Native Scroll</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400i,700" rel="stylesheet">
 </head>
 <body>
     <div ng-controller="ExampleApp.Controller">
@@ -13,13 +14,7 @@
             <scroll-area>
                 <div id="list" class="brand-scrollbar">
                     <ul>
-                        <li class="head">
-                            <select>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </li>
+                        <li class="head">Item & Item</li>
                         <li ng-repeat="item in data.list track by $index" ng-class="{ 'strong': $index % 10 === 0, 'normal': $index %10 !== 0 }">{{ item }}</li>
                     </ul>
                 </div>
@@ -41,39 +36,7 @@
                 </div>
             </scroll-area>
         </connect-scrolls>
-        <div class="interact" ng-class="{ 'interact--open': interact }">
-            <span class="interact__toggle" ng-click="toggle()">&#9868;</span>
-            <ul class="interact__list">
-                <li class="interact__item">
-                    <button class="form-item" ng-click="augNs.scrollToStart()">Scroll To Start</button>
-                </li>
-                <li class="interact__item">
-                    <button class="form-item" ng-click="augNs.scrollToStartLeft()">Scroll To Start Left</button>
-                </li>
-                <li class="interact__item">
-                    <button class="form-item" ng-click="augNs.scrollToStartTop()">Scroll To Start Top</button>
-                </li>
-                <li class="interact__item">
-                    <button class="form-item" ng-click="augNs.scrollToEnd()">Scroll To End</button>
-                </li>
-                <li class="interact__item">
-                    <button class="form-item" ng-click="augNs.scrollToEndLeft()">Scroll To End Left</button>
-                </li>
-                <li class="interact__item">
-                    <button class="form-item" ng-click="augNs.scrollToEndTop()">Scroll To End Top</button>
-                </li>
-                <li class="interact__item">
-                    <input class="form-item" type="text" pattern="[0-9]+" placeholder="Scroll to left value" ng-model="scrollToLeft">
-                    <input class="form-item" type="text" pattern="[0-9]+" placeholder="Scroll to top value" ng-model="scrollToTop">
-                    <button class="form-item" ng-click="augNs.scrollToValue(scrollToLeft, scrollToTop)">Scroll To Position</button>
-                </li>
-                <li class="interact__item">
-                    <input class="form-item" type="text" pattern="[0-9]+" placeholder="Scroll by left value" ng-model="scrollByLeft">
-                    <input class="form-item" type="text" pattern="[0-9]+" placeholder="Scroll by top value" ng-model="scrollByTop">
-                    <button class="form-item" ng-click="augNs.scrollByValue(scrollByLeft, scrollByTop)">Scroll By Position</button>
-                </li>
-            </ul>
-        </div>
+        <span ng-include="'interact-methods.html'"></span>
     </div>
     <script src="./lib/angular.stable.min.js" charset="utf-8"></script>
     <script src="../dist/ngAugmentNativeScroll.js" charset="utf-8"></script>

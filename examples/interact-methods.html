@@ -1,0 +1,38 @@
+<div class="interact" ng-class="{ 'interact--open': interact }">
+    <span class="interact__toggle" ng-click="toggle()">&#9868;</span>
+    <ul class="interact__list brand-scrollbar">
+        <li class="interact__item interact__title">Exposed Methods</li>
+        <li class="interact__item">
+            <button class="form-item form-button" ng-click="augNs.scrollToStart()" title="Scroll all areas to start, horizontally and vertically">Scroll To Start</button>
+        </li>
+        <li class="interact__item">
+            <button class="form-item form-button" ng-click="augNs.scrollToStartLeft()" title="Scroll all areas to start-left, horizontally only">Scroll To Start Left</button>
+        </li>
+        <li class="interact__item">
+            <button class="form-item form-button" ng-click="augNs.scrollToStartTop()" title="Scroll all areas to start-top, vertically only">Scroll To Start Top</button>
+        </li>
+        <li class="interact__item">
+            <button class="form-item form-button" ng-click="augNs.scrollToEnd()" title="Scroll all areas to end, horizontally and vertically">Scroll To End</button>
+        </li>
+        <li class="interact__item">
+            <button class="form-item form-button" ng-click="augNs.scrollToEndLeft()" title="Scroll all areas to end-left, horizontally only">Scroll To End Left</button>
+        </li>
+        <li class="interact__item">
+            <button class="form-item form-button" ng-click="augNs.scrollToEndTop()" title="Scroll all areas to end-top, vertically only">Scroll To End Top</button>
+        </li>
+        <li class="interact__item">
+            <input class="form-item form-input" type="text" placeholder="Left value" ng-model="scrollToLeft">
+            <input class="form-item form-input" type="text" placeholder="Top value" ng-model="scrollToTop">
+            <button class="form-item form-button" ng-click="augNs.scrollToPosition(scrollToLeft, scrollToTop)" title="Scroll to the positions provided">Scroll To Position</button>
+        </li>
+        <li class="interact__item">
+            <input class="form-item form-input" type="text" placeholder="Left value" ng-model="scrollByLeft">
+            <input class="form-item form-input" type="text" placeholder="Top value" ng-model="scrollByTop">
+            <button class="form-item form-button" ng-click="augNs.scrollByValue(scrollByLeft, scrollByTop)" title="Scroll to new positions by adding the value provided to current positions">Scroll By Value</button>
+        </li>
+        <li class="interact__item interact__title">
+            <a href="https://badge.fury.io/js/ng-augment-native-scroll"><img src="https://badge.fury.io/js/ng-augment-native-scroll.svg" alt="npm version" height="18"></a>
+            <a href="https://badge.fury.io/bo/ng-augment-native-scroll"><img src="https://badge.fury.io/bo/ng-augment-native-scroll.svg" alt="Bower version" height="18"></a>
+        </li>
+    </ul>
+</div>
