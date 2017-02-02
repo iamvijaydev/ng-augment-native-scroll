@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Connected Scrolls - ng Agument Native Scroll</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400i,700" rel="stylesheet">
 </head>
 <body>
     <div ng-controller="ExampleApp.Controller">
@@ -13,13 +14,7 @@
             <scroll-area>
                 <div id="list" class="brand-scrollbar">
                     <ul>
-                        <li class="head">
-                            <select>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </li>
+                        <li class="head">Item & Item</li>
                         <li ng-repeat="item in data.list track by $index" ng-class="{ 'strong': $index % 10 === 0, 'normal': $index %10 !== 0 }">{{ item }}</li>
                     </ul>
                 </div>
@@ -41,6 +36,7 @@
                 </div>
             </scroll-area>
         </connect-scrolls>
+        <span ng-include="'interact-methods.html'"></span>
     </div>
     <script src="./lib/angular.stable.min.js" charset="utf-8"></script>
     <script src="../dist/ngAugmentNativeScroll.js" charset="utf-8"></script>

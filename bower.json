@@ -20,7 +20,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:iamvijaydev/ng-augment-native-scroll.git"
-  }
+  },
   "moduleType": "node",
   "ignore": [
     "**/.*",

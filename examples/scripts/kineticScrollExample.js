@@ -41,8 +41,13 @@ angular.module('app', ['ngAugmentNativeScroll'])
             }
 
             $timeout(function () {
-                // the exposed methods are now ready to use
-                console.log( $scope.augNs )
+                console.log( 'The exposed methods:' );
+                console.log( $scope.augNs );
             }, 10);
+
+            $scope.interact = false;
+            $scope.toggle = function () {
+                $scope.interact = !$scope.interact;
+            }
         }
     ])
