@@ -49,7 +49,7 @@ You can also use it in the old fashion way as:
 ```
 
 ###Direct use:
-Download the files as [zip](https://github.com/iamvijaydev/ng-augment-native-scroll/archive/v0.13.0.zip) or [tar.gz](https://github.com/iamvijaydev/ng-augment-native-scroll/archive/v0.13.0.tar.gz). Include it in your HTML file and use it in your script file as shown below:
+Download the files as [zip](https://github.com/iamvijaydev/ng-augment-native-scroll/archive/v0.13.1.zip) or [tar.gz](https://github.com/iamvijaydev/ng-augment-native-scroll/archive/v0.13.1.tar.gz). Include it in your HTML file and use it in your script file as shown below:
 ```
 // template.html
 <script src="path/to/file" charset="utf-8"></script>
