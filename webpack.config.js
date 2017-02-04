@@ -1,24 +1,26 @@
-var webpack = require('webpack');
-var fs = require('fs');
+const webpack = require('webpack');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
-    entry: __dirname + '/src/index.js',
+    entry: './src/index.js',
     output: {
-        filename: __dirname + '/dist/ngAugmentNativeScroll.js'
+        filename: 'ngAugmentNativeScroll.js',
+        path: path.resolve(__dirname, 'dist')
     },
     target: 'node',
     externals: 'angular',
-    module: {
-        loaders: [{
-            test: /\.js$/,
-            exclude: /node_modules|bower_components/,
-            loader: 'babel'
-        }]
-    },
     plugins: [
-        new webpack.BannerPlugin( 'v' + require('./package.json').version + '\n\n' + fs.readFileSync('./LICENSE', 'utf8'))
+        new webpack.BannerPlugin({
+            banner: `v${require('./package.json').version}\n\n${fs.readFileSync('./LICENSE', 'utf8')}`,
+            raw: false,
+            entryOnly: true
+        })
     ],
-    progress: true,
-    profile: true,
-    colors: true
+    devServer: {
+        contentBase: path.join(__dirname, '/'),
+        compress: true,
+        port: 3000,
+        hot: true
+    }
 };
