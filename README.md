@@ -1,6 +1,6 @@
 [![npm version](https://badge.fury.io/js/ng-augment-native-scroll.svg)](https://badge.fury.io/js/ng-augment-native-scroll) [![Bower version](https://badge.fury.io/bo/ng-augment-native-scroll.svg)](https://badge.fury.io/bo/ng-augment-native-scroll)
 
-**v0.13.0 BREAKING CHANGE:** The directives won't expose methods to the $parent scope unless a unique name is not provided in options. This is a necessary change as when using multiple instance with the same $parent scope the second instance will overwrite the previous one. Please check the actual change [here](https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/src/connectScrolls.directive.js#L76-L78) and example usage [here](https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/examples/scripts/connectScrollsExample.js#L39)
+**v0.13.0 BREAKING CHANGE:** The directives won't expose methods to the $parent scope unless a unique name is not provided in options. This is a necessary change as when using multiple instance with the same $parent scope the second instance will overwrite the previous one. Please check the actual change [here](https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/src/connectScrolls.directive.js#L76-L78) and example usage [here](https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/examples/scripts/connectScrollsExample.js#L39).
 
 ng Augment Native scroll
 ========================
@@ -17,7 +17,7 @@ This module aims to provides few directives to augment native scroll:
 # Installation and usage
 ###Via yarn or npm:
 ```shell
-# yarn (preffered)
+# yarn (preferred)
 $ yarn add ng-augment-native-scroll
 
 #npm
@@ -25,7 +25,6 @@ $ npm install ng-augment-native-scroll --save
 ```
 Then use it as:
 ```javascript
-// main.js
 var angular = require('angular');
 angular.module('mainApp', [
     require('ng-augment-native-scroll')
@@ -42,7 +41,7 @@ var ngAugmentNativeScroll = require('./bower_components/ng-augment-native-scroll
 
 angular.module('mainApp', ['ngAugmentNativeScroll']);
 ```
-You can also use it the old fashion way as:
+You can also use it in the old fashion way as:
 ```html
 <script src="/bower_components/ng-augment-native-scroll/dist/ngAugmentNativeScroll.js"></script>
 <!-- or -->
