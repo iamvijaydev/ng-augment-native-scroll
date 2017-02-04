@@ -36,13 +36,14 @@ angular.module('app', ['ngAugmentNativeScroll'])
             $scope.data = factory.generateData();
 
             $scope.options = {
+                name: 'myAugNs',
                 enableKinetics: true,
                 movingAverage: 0.2
             }
 
             $timeout(function () {
                 console.log( 'The exposed methods:' );
-                console.log( $scope.augNs );
+                console.log( $scope.myAugNs );
             }, 10);
 
             $scope.interact = false;

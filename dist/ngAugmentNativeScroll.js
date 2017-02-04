@@ -246,18 +246,25 @@ function ConnectScrolls (augNsUtils, augNsOptions, kineticEngine) {
 
             scope.setActiveNode = function (e) {
                 scope.activeId = augNsUtils.findMatchingTarget(e.target, scope.childNodes);
+
+                // if its a touch device and we are autoscrolling
+                // it should stop as soon as the user touches the scroll area
+                // else there will be jerky effects
+                if ( scope.hasTouch ) {
+                    scope.cancelAutoScroll();
+                }
             }
 
             scope.onScroll = function (e) {
+                var target = e.target;
+                var valX = undefined;
+                var valY = undefined;
+
                 if ( scope.pressed || scope.isAutoScrolling ) {
                     e.preventDefault();
                     e.stopPropagation();
                     return;
                 }
-
-                var target = e.target;
-                var valX = undefined;
-                var valY = undefined;
 
                 if ( target.clientWidth !== target.scrollWidth ) {
                     valX = target.scrollLeft;
@@ -291,7 +298,9 @@ function ConnectScrolls (augNsUtils, augNsOptions, kineticEngine) {
             });
 
             // expose few methods to the parent controller
-            scope.$parent.augNs = scope.exposedMethods;
+            if ( scope.userOptions.hasOwnProperty('name') ) {
+                scope.$parent[scope.userOptions.name] = scope.exposedMethods;
+            }
         },
         controller: ['$scope', function connectScrollsCtrl($scope) {
             var childNodes = $scope.childNodes = [];
@@ -626,7 +635,9 @@ function KineticScroll (augNsUtils, augNsOptions, kineticEngine) {
             kineticEngine.call(this, scope, augNsUtils);
 
             // expose few methods to the parent controller
-            scope.$parent.augNs = scope.exposedMethods;
+            if ( scope.userOptions.hasOwnProperty(name) ) {
+                scope.$parent[scope.userOptions.name] = scope.exposedMethods;
+            }
         }
     }
 }

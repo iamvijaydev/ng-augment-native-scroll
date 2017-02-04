@@ -20,7 +20,9 @@ function KineticScroll (augNsUtils, augNsOptions, kineticEngine) {
             kineticEngine.call(this, scope, augNsUtils);
 
             // expose few methods to the parent controller
-            scope.$parent.augNs = scope.exposedMethods;
+            if ( scope.userOptions.hasOwnProperty(name) ) {
+                scope.$parent[scope.userOptions.name] = scope.exposedMethods;
+            }
         }
     }
 }
