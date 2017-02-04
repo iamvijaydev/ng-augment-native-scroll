@@ -4,10 +4,9 @@
   "description": "Augmenting native scroll with higher functionality",
   "main": "src/index.js",
   "scripts": {
-    "eg-serve": "http-server -p 3000 -s",
-    "dist": "rimraf dist/* && webpack --config ./webpack.config.js && webpack --config ./webpack.config.min.js",
-    "dev": "webpack",
-    "start": "npm run dev && npm run eg-serve"
+    "start": "webpack-dev-server",
+    "test": "karma start",
+    "dist": "rimraf dist/* && webpack && webpack --config ./webpack.config.min.js"
   },
   "author": "Vijay <vijaydev.in@gmail.com> (http://vijaydev.com/)",
   "license": "MIT",
