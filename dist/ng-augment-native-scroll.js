@@ -1,5 +1,5 @@
 /*!
- * v0.14.0
+ * v0.14.1
  * 
  * MIT License
  * 
@@ -694,15 +694,20 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
 "use strict";
 
 
-var angular = __webpack_require__(6);
+(function () {
+    var moduleName = 'ng-augment-native-scroll';
+    var angular = __webpack_require__(6);
 
-angular.module('ng-augment-native-scroll', [])
-    .factory('augNsUtils', __webpack_require__(1))
-    .value('augNsOptions', __webpack_require__(0))
-    .value('kineticEngine', __webpack_require__(3))
-    .directive('connectScrolls', __webpack_require__(2))
-    .directive('scrollArea', __webpack_require__(5))
-    .directive('kineticScroll', __webpack_require__(4));
+    angular.module(moduleName, [])
+        .factory('augNsUtils', __webpack_require__(1))
+        .value('augNsOptions', __webpack_require__(0))
+        .value('kineticEngine', __webpack_require__(3))
+        .directive('connectScrolls', __webpack_require__(2))
+        .directive('scrollArea', __webpack_require__(5))
+        .directive('kineticScroll', __webpack_require__(4));
+
+    return moduleName;
+})();
 
 
 /***/ })
