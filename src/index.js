@@ -2,7 +2,7 @@
 
 var angular = require('angular');
 
-angular.module('ngAugmentNativeScroll', [])
+angular.module('ng-augment-native-scroll', [])
     .factory('augNsUtils', require('./augNsUtils.factory.js'))
     .value('augNsOptions', require('./augNsOptions.value.js'))
     .value('kineticEngine', require('./kineticEngine.value.js'))
