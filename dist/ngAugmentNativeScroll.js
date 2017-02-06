@@ -24,7 +24,17 @@
  * SOFTWARE.
  * 
  */
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("angular"));
+	else if(typeof define === 'function' && define.amd)
+		define(["angular"], factory);
+	else if(typeof exports === 'object')
+		exports["ngAugmentNativeScroll"] = factory(require("angular"));
+	else
+		root["ngAugmentNativeScroll"] = factory(root["angular"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_6__) {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -675,7 +685,7 @@ module.exports = ScrollArea;
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = angular;
+module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
 
 /***/ }),
 /* 7 */
@@ -697,3 +707,4 @@ angular.module('ngAugmentNativeScroll', [])
 
 /***/ })
 /******/ ]);
+});
