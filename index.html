@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ng Agument Native Scroll</title>
+    <link rel="stylesheet" href="/examples/css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400i,700" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation"><a href="https://github.com/iamvijaydev/ng-augment-native-scroll">GitHub</a></li>
+                    <li role="presentation"><a href="https://github.com/iamvijaydev/ng-augment-native-scroll/issues">Issues</a></li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">ng Augment Native Scroll</h3>
+        </div>
+
+        <article class="markdown-body entry-content" itemprop="text">
+            <p>
+                <a href="https://github.com/iamvijaydev/ng-augment-native-scroll">
+                    <img src="https://img.shields.io/badge/Github-v0.13.2-brightgreen.svg" alt="Github version" height="20">
+                </a>
+                <a href="https://badge.fury.io/js/ng-augment-native-scroll">
+                    <img src="https://camo.githubusercontent.com/98ca34f992eecc957d10eec3e473ac83558b4a7e/68747470733a2f2f62616467652e667572792e696f2f6a732f6e672d6175676d656e742d6e61746976652d7363726f6c6c2e737667" alt="npm version" data-canonical-src="https://badge.fury.io/js/ng-augment-native-scroll.svg" style="max-width:100%;">
+                </a>
+                <a href="https://badge.fury.io/bo/ng-augment-native-scroll">
+                    <img src="https://camo.githubusercontent.com/1d32d1ecfbbc201493cc97aebfa8a65346a91109/68747470733a2f2f62616467652e667572792e696f2f626f2f6e672d6175676d656e742d6e61746976652d7363726f6c6c2e737667" alt="Bower version" data-canonical-src="https://badge.fury.io/bo/ng-augment-native-scroll.svg" style="max-width:100%;">
+                </a>
+            </p>
+
+<p><strong>v0.13.0 BREAKING CHANGE:</strong> The directives won't expose methods to the $parent scope unless a unique name is not provided in options. This is a necessary change as when using multiple instance with the same $parent scope the second instance will overwrite the previous one. Please check the actual change <a href="https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/src/connectScrolls.directive.js#L76-L78">here</a> and example usage <a href="https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/examples/scripts/connectScrollsExample.js#L39">here</a>.</p>
+
+<h1><a id="user-content-ng-augment-native-scroll" class="anchor" href="#ng-augment-native-scroll" aria-hidden="true"></a>ng Augment Native scroll</h1>
+
+<p><em>This is a angular (v1.x) port of the original experiments with <a href="https://github.com/iamvijaydev/augment-native-scroll">augment native scroll</a></em></p>
+
+<p>This module aims to provides few directives to augment native scroll:</p>
+
+<ul>
+<li><code>connectScrolls</code> will connect scrolls within <code>scrollArea</code> so that they scroll synchronously. Meaning if one scrolls other will too. For non-touch devices it can also apply kinetic scroll. Here's an <a href="/examples/connectedScrolls.html">example</a>.</li>
+<li><code>kineticScroll</code> will apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. Here's an <a href="/examples/kineticScroll.html">example</a>.</li>
+<li>For a more complex and nested example <a href="/examples/kineticScroll.html">check here</a></li>
+</ul>
+
+<p><strong>NOTE: Kinetic scroll with mouse events will be applied to non-touch devices only. It will NOT be applied on touch devices.</strong></p>
+
+<h1><a id="user-content-installation-and-usage" class="anchor" href="#installation-and-usage" aria-hidden="true"></a>Installation and usage</h1>
+
+<h3><a id="user-content-via-yarn-or-npm" class="anchor" href="#via-yarn-or-npm" aria-hidden="true"></a>Via yarn or npm:</h3>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c"><span class="pl-c">#</span> yarn (recommended)</span>
+$ yarn add ng-augment-native-scroll
+
+<span class="pl-c"><span class="pl-c">#</span>npm</span>
+$ npm install ng-augment-native-scroll --save</pre></div>
+
+<p>Then use it as:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> angular <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>angular<span class="pl-pds">'</span></span>);
+<span class="pl-smi">angular</span>.<span class="pl-en">module</span>(<span class="pl-s"><span class="pl-pds">'</span>mainApp<span class="pl-pds">'</span></span>, [
+    <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>ng-augment-native-scroll<span class="pl-pds">'</span></span>)
+]);</pre></div>
+
+<h3><a id="user-content-via-bower" class="anchor" href="#via-bower" aria-hidden="true"></a>Via bower:</h3>
+
+<pre><code>$ bower install ng-augment-native-scroll --save
+</code></pre>
+
+<p>Then use it as:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> angular <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>angular<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> ngAugmentNativeScroll <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>./bower_components/ng-augment-native-scroll/src<span class="pl-pds">'</span></span>);
+
+<span class="pl-smi">angular</span>.<span class="pl-en">module</span>(<span class="pl-s"><span class="pl-pds">'</span>mainApp<span class="pl-pds">'</span></span>, [<span class="pl-s"><span class="pl-pds">'</span>ngAugmentNativeScroll<span class="pl-pds">'</span></span>]);</pre></div>
+
+<p>You can also use it in the old fashion way as:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>/bower_components/ng-augment-native-scroll/dist/ngAugmentNativeScroll.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+<span class="pl-c"><span class="pl-c">&lt;!--</span> or <span class="pl-c">--&gt;</span></span>
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>/bower_components/ng-augment-native-scroll/dist/ngAugmentNativeScroll.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<h3><a id="user-content-direct-use" class="anchor" href="#direct-use" aria-hidden="true"></a>Direct use:</h3>
+
+<p>Download the files as <a href="https://github.com/iamvijaydev/ng-augment-native-scroll/archive/v0.13.2.zip">zip</a> or <a href="https://github.com/iamvijaydev/ng-augment-native-scroll/archive/v0.13.2.tar.gz">tar.gz</a>. Include it in your HTML file and use it in your script file as shown below:</p>
+
+<pre><code>// template.html
+&lt;script src="path/to/file" charset="utf-8"&gt;&lt;/script&gt;
+
+// main.js
+angular.module('mainApp', ['ng-augment-native-scroll']);
+</code></pre>
+
+<h1><a id="user-content-connectscroll-and-scrollarea-directive-usage" class="anchor" href="#connectscroll-and-scrollarea-directive-usage" aria-hidden="true"></a><code>connectScroll</code> and <code>scrollArea</code> directive usage</h1>
+
+<p>These directives can be used like the example below:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">connect</span><span class="pl-e">-scrolls</span> <span class="pl-e">options</span>=<span class="pl-s"><span class="pl-pds">"</span>options<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">scroll</span><span class="pl-e">-area</span>&gt;
+        &lt;<span class="pl-ent">ul</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>list<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">li</span> <span class="pl-e">ng-repeat</span>=<span class="pl-s"><span class="pl-pds">"</span>item in data.list<span class="pl-pds">"</span></span>&gt;{{ item }}&lt;/<span class="pl-ent">li</span>&gt;
+        &lt;/<span class="pl-ent">ul</span>&gt;
+    &lt;/<span class="pl-ent">scroll</span><span class="pl-e">-area</span>&gt;
+    &lt;<span class="pl-ent">scroll</span><span class="pl-e">-area</span>&gt;
+        &lt;<span class="pl-ent">table</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>table<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">tbody</span>&gt;
+                &lt;<span class="pl-ent">tr</span> <span class="pl-e">ng-repeat</span>=<span class="pl-s"><span class="pl-pds">"</span>row in data.table track by $index<span class="pl-pds">"</span></span>&gt;
+                    &lt;<span class="pl-ent">td</span> <span class="pl-e">ng-repeat</span>=<span class="pl-s"><span class="pl-pds">"</span>cell in row track by $index<span class="pl-pds">"</span></span>&gt;{{ cell }}&lt;/<span class="pl-ent">td</span>&gt;
+                &lt;/<span class="pl-ent">tr</span>&gt;
+            &lt;/<span class="pl-ent">tbody</span>&gt;
+        &lt;/<span class="pl-ent">table</span>&gt;
+    &lt;/<span class="pl-ent">scroll</span><span class="pl-e">-area</span>&gt;
+&lt;/<span class="pl-ent">connect</span><span class="pl-e">-scrolls</span>&gt;</pre></div>
+
+<p><code>scrollArea</code> requires <code>connectScroll</code> and <code>connectScroll</code> expects <code>scrollArea</code> to define the scrollable areas to be connected. Neither can be used alone. You can use multiple <code>connect-scrolls</code> within the same scope. You can even nest one within other. But <strong>do not</strong> overlap one another, it's not supported yet.</p>
+
+<h1><a id="user-content-kineticscroll-directive-usage" class="anchor" href="#kineticscroll-directive-usage" aria-hidden="true"></a><code>kineticScroll</code> directive usage</h1>
+
+<p>This directive can be used like the example below:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">kinetic</span><span class="pl-e">-scroll</span> <span class="pl-e">options</span>=<span class="pl-s"><span class="pl-pds">"</span>options<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">table</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>table<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">tbody</span>&gt;
+            &lt;<span class="pl-ent">tr</span> <span class="pl-e">ng-repeat</span>=<span class="pl-s"><span class="pl-pds">"</span>row in data.table track by $index<span class="pl-pds">"</span></span>&gt;
+                &lt;<span class="pl-ent">td</span> <span class="pl-e">ng-repeat</span>=<span class="pl-s"><span class="pl-pds">"</span>cell in row track by $index<span class="pl-pds">"</span></span>&gt;{{ cell }}&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;/<span class="pl-ent">tr</span>&gt;
+        &lt;/<span class="pl-ent">tbody</span>&gt;
+    &lt;/<span class="pl-ent">table</span>&gt;
+&lt;/<span class="pl-ent">kinetic</span><span class="pl-e">-scroll</span>&gt;</pre></div>
+
+<p><code>kineticScroll</code> expects its first child to be a scrollable area. It's better to wrap just the scrollable item with kineticScroll. You can use multiple <code>connect-scrolls</code> within the same scope. You can even nest one within other.</p>
+
+<h1><a id="user-content-configurable-options" class="anchor" href="#configurable-options" aria-hidden="true"></a>Configurable options</h1>
+
+<table><thead>
+<tr>
+<th>Option</th>
+<th align="left">Description</th>
+<th align="left">Type</th>
+<th align="left">Default</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>name</code></td>
+<td align="left">Give it a name, a unique name. The directives will be exposing the helper methods to the $parent scope on this namespace. Provide a unique name when using multiple or nested instances.</td>
+<td align="left">String</td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td><code>enableKinetics</code></td>
+<td align="left"><strong>On touch devices kinetics won't be applied.</strong> Apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices.</td>
+<td align="left">Boolean</td>
+<td align="left"><code>true</code></td>
+</tr>
+<tr>
+<td><code>movingAverage</code></td>
+<td align="left">The <a href="https://en.wikipedia.org/wiki/Moving_average">moving average filter</a> protects the kinetic scroll going to a frenzy state. A lower value will have a slow and smooth kinetic scroll</td>
+<td align="left">Number</td>
+<td align="left"><code>0.1</code></td>
+</tr>
+<tr>
+<td><code>preventDefaultException</code></td>
+<td align="left">Mouse events for kinetic scrolling is prevented from executing default action, i:e<code>e.preventDefault()</code> is called internally. This can make elements non-responsive. For e.g: select wont open. You can provide <code>tagName</code>, <code>class</code> or <code>id</code> that when matched wont call <code>preventDefault</code>. By default input, textarea, button and select are exempted.</td>
+<td align="left">Object</td>
+<td align="left"><a href="https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/src/augNsOptions.value.js#L6-L8">Look here</a></td>
+</tr>
+</tbody></table>
+
+<h1><a id="user-content-exposed-methods-to-parent" class="anchor" href="#exposed-methods-to-parent" aria-hidden="true"></a>Exposed methods to $parent</h1>
+
+<p>Both directive <code>connectScrolls</code> and <code>kineticScroll</code> will expose couple of methods to it's parent scope. With the exposed methods we can control the scroll from $parent scope; for e.g. scroll to start or end. The exposed methods will be available on the namespace <del><code>augNs</code></del> as provided in in the options. For e.g. let's assume the option is <code>{ name: 'myAugNs' }</code> then the exposed methods will be available on <code>$scope.myAugNs</code>  Here are the list of exposed methods:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th align="left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>scrollToStart</code></td>
+<td align="left">Scrolls all scroll to start, i:e scrollLeft and scrollTop are set to <code>0</code></td>
+</tr>
+<tr>
+<td><code>scrollToStartLeft</code></td>
+<td align="left">Scrolls all scrollLeft to start</td>
+</tr>
+<tr>
+<td><code>scrollToStartTop</code></td>
+<td align="left">Scrolls all scrollTop to start</td>
+</tr>
+<tr>
+<td><code>scrollToEnd</code></td>
+<td align="left">Scrolls all scroll to end or max scroll, i:e scrollLeft and scrollTop are set to possible max scroll value</td>
+</tr>
+<tr>
+<td><code>scrollToEndLeft</code></td>
+<td align="left">Scrolls all scrollLeft to end or max scroll left value</td>
+</tr>
+<tr>
+<td><code>scrollToEndTop</code></td>
+<td align="left">Scrolls all scrollTop to end or max scroll top value</td>
+</tr>
+<tr>
+<td><code>scrollToPosition</code></td>
+<td align="left">Scrolls to the positions provided as arguments. <code>$scope.augNs.scrollToPosition({Number} left, {Number} top)</code></td>
+</tr>
+<tr>
+<td><code>scrollByValue</code></td>
+<td align="left">Scroll to new positions by adding the arguments provided to current positions. <code>$scope.augNs.scrollByValue({Number} left, {Number} top)</code></td>
+</tr>
+</tbody></table>
+
+<p>Here is an example of how it can be used on the $parent scope:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> connect-scroll options</span>
+<span class="pl-smi">$scope</span>.<span class="pl-c1">options</span> <span class="pl-k">=</span> {
+    name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>myAugNs<span class="pl-pds">'</span></span>
+}
+
+<span class="pl-c"><span class="pl-c">//</span> reset scroll after fetching new data</span>
+<span class="pl-smi">DataService</span>.<span class="pl-en">fetchUserList</span>()
+    .<span class="pl-en">then</span>(<span class="pl-k">function</span> (<span class="pl-smi">data</span>) {
+        <span class="pl-smi">$scope</span>.<span class="pl-smi">userList</span> <span class="pl-k">=</span> data;
+        <span class="pl-smi">$scope</span>.<span class="pl-smi">myAugNs</span>.<span class="pl-en">scrollToStart</span>();
+    })</pre></div>
+
+<h1><a id="user-content-todo" class="anchor" href="#todo" aria-hidden="true"></a>TODO</h1>
+
+<p>Testing and codecoverage.</p>
+
+<h1><a id="user-content-future" class="anchor" href="#future" aria-hidden="true"></a>Future</h1>
+
+<ul>
+<li>Implement pull-down-to functionality - refresh or load previous page to name a few</li>
+<li>Implement pull-up-to functionality - load next page may be</li>
+</ul>
+</article>
+
+        <footer class="footer">
+            <p>Made with &hearts; by <a href="https://github.com/iamvijaydev">Vijay Dev</a></p>
+        </footer>
+    </div>
+</body>
+</html>
