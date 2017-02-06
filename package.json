@@ -1,6 +1,6 @@
 {
   "name": "ng-augment-native-scroll",
-  "version": "0.13.2",
+  "version": "0.14.0",
   "description": "Augmenting native scroll with higher functionality",
   "main": "dist/ng-augment-native-scroll.js",
   "module": "src/index.js",
