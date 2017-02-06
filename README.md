@@ -133,7 +133,7 @@ DataService.fetchUserList()
 ```
 
 # TODO
-Testing and codecoverage.
+Testing and code-coverage.
 
 #Future
 * Implement pull-down-to functionality - refresh or load previous page to name a few
