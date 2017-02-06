@@ -1,5 +1,5 @@
 /*!
- * v0.13.2
+ * v0.14.0
  * 
  * MIT License
  * 
@@ -30,9 +30,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["angular"], factory);
 	else if(typeof exports === 'object')
-		exports["ngAugmentNativeScroll"] = factory(require("angular"));
+		exports["ng-augment-native-scroll"] = factory(require("angular"));
 	else
-		root["ngAugmentNativeScroll"] = factory(root["angular"]);
+		root["ng-augment-native-scroll"] = factory(root["angular"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_6__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -696,7 +696,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
 
 var angular = __webpack_require__(6);
 
-angular.module('ngAugmentNativeScroll', [])
+angular.module('ng-augment-native-scroll', [])
     .factory('augNsUtils', __webpack_require__(1))
     .value('augNsOptions', __webpack_require__(0))
     .value('kineticEngine', __webpack_require__(3))
