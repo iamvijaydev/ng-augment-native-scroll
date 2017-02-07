@@ -1,18 +1,15 @@
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
-const webpackMerge = require('webpack-merge');
-const commonConfig = require('./webpack.base.js');
 
-module.exports = function(env) {
-    return webpackMerge(commonConfig(), {
+module.exports = function() {
+    return {
+        entry: './examples/scripts/index.js',
         output: {
-            filename: 'ng-augment-native-scroll.min.js',
-            path: path.resolve(__dirname, 'dist'),
-            library: 'ng-augment-native-scroll',
-            libraryTarget: 'umd'
+            filename: 'exampleApp.bundle.js',
+            path: path.resolve(__dirname, 'examples/scripts'),
         },
-        devtool: 'cheap-module-source-map',
+        target: 'node',
         plugins: [
             new webpack.optimize.UglifyJsPlugin({
                 beautify: false,
@@ -31,5 +28,5 @@ module.exports = function(env) {
                 entryOnly: true
             })
         ]
-    });
+    };
 }

@@ -1,5 +1,5 @@
 /*!
- * v0.13.2
+ * v0.15.0
  * 
  * MIT License
  * 
@@ -24,7 +24,17 @@
  * SOFTWARE.
  * 
  */
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("angular"));
+	else if(typeof define === 'function' && define.amd)
+		define(["angular"], factory);
+	else if(typeof exports === 'object')
+		exports["ng-augment-native-scroll"] = factory(require("angular"));
+	else
+		root["ng-augment-native-scroll"] = factory(root["angular"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_6__) {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -675,7 +685,7 @@ module.exports = ScrollArea;
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = angular;
+module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
 
 /***/ }),
 /* 7 */
@@ -684,16 +694,24 @@ module.exports = angular;
 "use strict";
 
 
-var angular = __webpack_require__(6);
+function main () {
+    var angular = __webpack_require__(6);
+    var moduleName = 'ng-augment-native-scroll';
 
-angular.module('ngAugmentNativeScroll', [])
-    .factory('augNsUtils', __webpack_require__(1))
-    .value('augNsOptions', __webpack_require__(0))
-    .value('kineticEngine', __webpack_require__(3))
-    .directive('connectScrolls', __webpack_require__(2))
-    .directive('scrollArea', __webpack_require__(5))
-    .directive('kineticScroll', __webpack_require__(4));
+    angular.module(moduleName, [])
+        .factory('augNsUtils', __webpack_require__(1))
+        .value('augNsOptions', __webpack_require__(0))
+        .value('kineticEngine', __webpack_require__(3))
+        .directive('connectScrolls', __webpack_require__(2))
+        .directive('scrollArea', __webpack_require__(5))
+        .directive('kineticScroll', __webpack_require__(4));
+
+    return moduleName;
+}
+
+module.exports = main();
 
 
 /***/ })
 /******/ ]);
+});
