@@ -6,7 +6,8 @@
   "module": "src/index.js",
   "scripts": {
     "dist": "rimraf dist/* && webpack && webpack --config ./webpack.config.min.js",
-    "start": "webpack-dev-server"
+    "eg-dist": "npm run dist && webpack --config ./webpack.config.examples.js",
+    "start": "npm run eg-dist && webpack-dev-server"
   },
   "author": "Vijay <vijaydev.in@gmail.com> (http://vijaydev.com/)",
   "license": "MIT",
@@ -33,6 +34,7 @@
     "eslint-plugin-angular": "^1.6.1",
     "rimraf": "^2.5.4",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.3.0"
+    "webpack-dev-server": "^2.3.0",
+    "webpack-merge": "^2.6.1"
   }
 }
