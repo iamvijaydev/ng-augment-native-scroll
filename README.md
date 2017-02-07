@@ -1,13 +1,19 @@
 ng Augment Native scroll [![npm version](https://badge.fury.io/js/ng-augment-native-scroll.svg)](https://badge.fury.io/js/ng-augment-native-scroll) [![Bower version](https://badge.fury.io/bo/ng-augment-native-scroll.svg)](https://badge.fury.io/bo/ng-augment-native-scroll)
 ========================
-_This is a angular (v1.x) port of the original experiments with [augment native scroll](https://github.com/iamvijaydev/augment-native-scroll)_
+This module aims to augment native scroll to provide few neat features. The features available as directives, are applied intelligently, based on the user device. Touch or non-touch. _This is a angular (v1.x) port of the original experiments with [augment native scroll](https://github.com/iamvijaydev/augment-native-scroll)._
 
-This module aims to provides few directives to augment the native scroll:
+###Connect Scrolls
+It can connect two or more scrollable areas so that they all scroll as one. Wrap each scrollable area with `scrollArea` directive, then wrap them all with `connectScrolls` directive. `connectScrolls` connects scrollable areas within `scrollArea`. For non-touch devices it can also apply kinetic scrolling.
 
-* `connectScrolls` will connect scrolls within `scrollArea` so that they scroll synchronously. Meaning if one scrolls other will too. For non-touch devices it can also apply kinetic scroll. Here's an [example](https://iamvijaydev.github.io/ng-augment-native-scroll/examples/connectedScrolls.html).
-* `kineticScroll` will apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. Here's an [example](https://iamvijaydev.github.io/ng-augment-native-scroll/examples/kineticScroll.html).
+[Demo](https://iamvijaydev.github.io/ng-augment-native-scroll/examples/connectedScrolls.html)  |  [Usage](https://github.com/iamvijaydev/ng-augment-native-scroll/tree/develop#connectscroll-and-scrollarea-directive-usage)
+
+###Kinetic Scroll
+It will apply touch-device-like smooth and kinetic scroll to native scroll. You can (mouse) click-hold to drag the scroll and release-flick to auto-scroll just like a kinetic scroll on touch devices. Just wrap the scrollable area with `kineticScroll` directive.
+
+[Demo](https://iamvijaydev.github.io/ng-augment-native-scroll/examples/connectedScrolls.html)  |  [Usage](https://github.com/iamvijaydev/ng-augment-native-scroll/tree/develop#kineticscroll-directive-usage)
 
 **NOTE: Kinetic scroll with mouse events will be applied to non-touch devices only. It will NOT be applied on touch devices.**
+
 
 
 # Installation and usage
@@ -22,9 +28,7 @@ $ npm install ng-augment-native-scroll --save
 Then use it as:
 ```javascript
 var angular = require('angular');
-angular.module('mainApp', [
-    require('ng-augment-native-scroll')
-]);
+angular.module('mainApp', [ require('ng-augment-native-scroll') ]);
 ```
 ###Via bower:
 ```
@@ -48,7 +52,7 @@ You can also include it in the old fashion way as:
 Download the files as [zip](https://github.com/iamvijaydev/ng-augment-native-scroll/archive/v0.13.2.zip) or [tar.gz](https://github.com/iamvijaydev/ng-augment-native-scroll/archive/v0.13.2.tar.gz). Include it in your HTML file and use it in your script file as shown below:
 ```
 // template.html
-<script src="path/to/file" charset="utf-8"></script>
+<script src="<path-to-folder>/dist/ngAugmentNativeScroll.js" charset="utf-8"></script>
 
 // main.js
 angular.module('mainApp', ['ng-augment-native-scroll']);
