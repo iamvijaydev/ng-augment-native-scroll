@@ -1,8 +1,4 @@
-[![npm version](https://badge.fury.io/js/ng-augment-native-scroll.svg)](https://badge.fury.io/js/ng-augment-native-scroll) [![Bower version](https://badge.fury.io/bo/ng-augment-native-scroll.svg)](https://badge.fury.io/bo/ng-augment-native-scroll)
-
-**v0.13.0 BREAKING CHANGE:** The directives won't expose methods to the $parent scope unless a unique name is not provided in options. This is a necessary change as when using multiple instance with the same $parent scope the second instance will overwrite the previous one. Please check the actual change [here](https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/src/connectScrolls.directive.js#L76-L78) and example usage [here](https://github.com/iamvijaydev/ng-augment-native-scroll/blob/master/examples/scripts/connectScrollsExample.js#L39).
-
-ng Augment Native scroll
+ng Augment Native scroll [![npm version](https://badge.fury.io/js/ng-augment-native-scroll.svg)](https://badge.fury.io/js/ng-augment-native-scroll) [![Bower version](https://badge.fury.io/bo/ng-augment-native-scroll.svg)](https://badge.fury.io/bo/ng-augment-native-scroll)
 ========================
 _This is a angular (v1.x) port of the original experiments with [augment native scroll](https://github.com/iamvijaydev/augment-native-scroll)_
 
@@ -17,7 +13,7 @@ This module aims to provides few directives to augment native scroll:
 # Installation and usage
 ###Via yarn or npm:
 ```shell
-# yarn (preferred)
+# yarn (recommended)
 $ yarn add ng-augment-native-scroll
 
 #npm
@@ -137,7 +133,7 @@ DataService.fetchUserList()
 ```
 
 # TODO
-Testing and codecoverage.
+Testing and code-coverage.
 
 #Future
 * Implement pull-down-to functionality - refresh or load previous page to name a few

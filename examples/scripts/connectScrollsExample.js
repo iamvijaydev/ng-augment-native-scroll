@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app', ['ngAugmentNativeScroll'])
+angular.module('app', ['ng-augment-native-scroll'])
     .factory('ExampleApp.Factory', function () {
         return {
             generateData: function () {
