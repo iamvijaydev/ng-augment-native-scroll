@@ -15,6 +15,10 @@ body {
     user-select: none;
 }
 
+.no-overflow {
+    overflow: hidden;
+}
+
 .brand-scrollbar::-webkit-scrollbar-track
 {
 	border-radius: 4px;
