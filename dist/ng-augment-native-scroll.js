@@ -691,10 +691,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+function main () {
+    'use strict';
 
-
-(function () {
     var moduleName = 'ng-augment-native-scroll';
     var angular = __webpack_require__(6);
 
@@ -707,7 +706,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
         .directive('kineticScroll', __webpack_require__(4));
 
     return moduleName;
-})();
+}
+
+module.exports = main();
 
 
 /***/ })

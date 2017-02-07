@@ -1,8 +1,8 @@
 'use strict';
 
-(function () {
-    var moduleName = 'ng-augment-native-scroll';
+function main () {
     var angular = require('angular');
+    var moduleName = 'ng-augment-native-scroll';
 
     angular.module(moduleName, [])
         .factory('augNsUtils', require('./augNsUtils.factory.js'))
@@ -13,4 +13,6 @@
         .directive('kineticScroll', require('./kineticScroll.directive.js'));
 
     return moduleName;
-})();
+}
+
+module.exports = main();

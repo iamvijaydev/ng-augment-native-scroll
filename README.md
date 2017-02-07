@@ -13,7 +13,7 @@ This module aims to provides few directives to augment native scroll:
 # Installation and usage
 ###Via yarn or npm:
 ```shell
-# yarn (preferred)
+# yarn (recommended)
 $ yarn add ng-augment-native-scroll
 
 #npm
