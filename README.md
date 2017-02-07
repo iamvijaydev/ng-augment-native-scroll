@@ -50,10 +50,11 @@ You can also include it in the old fashion way as:
 
 ###Direct use:
 Download the files as [zip](https://github.com/iamvijaydev/ng-augment-native-scroll/archive/v0.15.0.zip) or [tar.gz](https://github.com/iamvijaydev/ng-augment-native-scroll/archive/v0.15.0.tar.gz). Include it in your HTML file and use it in your script file as shown below:
-```
+```html
 // template.html
 <script src="<path-to-folder>/dist/ngAugmentNativeScroll.js" charset="utf-8"></script>
-
+```
+```javascript
 // main.js
 angular.module('mainApp', ['ng-augment-native-scroll']);
 ```
