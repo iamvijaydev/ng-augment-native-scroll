@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const fs = require('fs');
 const path = require('path');
 
 module.exports = function() {

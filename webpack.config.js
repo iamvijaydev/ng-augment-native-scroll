@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const fs = require('fs');
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.base.js');
 
@@ -11,7 +12,7 @@ module.exports = function(env) {
                 raw: false,
                 entryOnly: true
             })
-        ]
+        ],
         devServer: {
             contentBase: path.join(__dirname, '/'),
             publicPath: '/dist/',
